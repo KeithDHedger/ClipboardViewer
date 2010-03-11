@@ -75,7 +75,8 @@ int main(int argc, char **argv)
 				if (image!=NULL)
 					{
 					gdk_pixbuf_save(image,"./pastedimage.png", "png",NULL,NULL, NULL, NULL);
-					g_free(image);
+					//g_free(image);
+					g_object_unref((gpointer) image);
 					}
 
 			}
@@ -121,7 +122,7 @@ int main(int argc, char **argv)
 	window = GTK_WINDOW(glade_xml_get_widget(mainui, "clipwindow"));
 	gtk_window_stick(GTK_WINDOW(window));
 	check(NULL);
-	glade_xml_signal_connect_data(mainui,"endprogram",G_CALLBACK(endProgram),GmainuiNT_TO_POINTER(window));
+	glade_xml_signal_connect_data(mainui,"endprogram",G_CALLBACK(endProgram),GUINT_TO_POINTER(window));
 
 	g_timeout_add(1000,check,NULL);
 	gtk_main();
