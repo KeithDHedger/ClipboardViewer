@@ -55,7 +55,7 @@ gboolean check(gpointer data)
 
 void endProgram(GtkButton *button, gpointer window_ptr)
 {
-	gtk_main_qmainuit();
+	gtk_main_quit();
 }
 
 int main(int argc, char **argv)
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 
 	gtk_init(&argc,&argv);
 	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogmainui")==0)
+	if (argc>1 && g_ascii_strcasecmp(argv[1],"--noui")==0)
 		{
 		if (argc>2 && g_ascii_strcasecmp(argv[2],"--image")==0)
 			{
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 		return 0;
 		}
 	program = gnome_program_init("ClipboardViewer", "0.1",
-                               LIBGNOMEmainui_MODULE,
+                               LIBGNOMEUI_MODULE,
                                argc, argv,
                                GNOME_PROGRAM_STANDARD_PROPERTIES,
                                GNOME_PARAM_HUMAN_READABLE_NAME, "ClipboardViewer",
@@ -102,8 +102,6 @@ int main(int argc, char **argv)
 						"clipboardviewer.glade",
 						true,
 						NULL);
-//	if (gladepath==NULL)
-//		gladepath=GLADEFILE;
 
 	if (g_file_test(GLADEFILE,G_FILE_TEST_EXISTS)==TRUE)
 		{
