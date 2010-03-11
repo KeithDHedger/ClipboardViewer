@@ -10,6 +10,8 @@
 #include <glib/gstdio.h>
 #include <glib.h>
 
+#include "globals.h"
+
 GladeXML	*ui;
 GtkClipboard	*mainclipboard;
 
@@ -100,8 +102,21 @@ int main(int argc, char **argv)
 						"clipboardviewer.glade",
 						true,
 						NULL);
-	if (gladepath==NULL)
-		gladepath="clipviewer.glade";
+//	if (gladepath==NULL)
+//		gladepath=GLADEFILE;
+
+	if (g_file_test(GLADEFILE,G_FILE_TEST_EXISTS)==TRUE)
+		{
+		gladepath=GLADEFILE;
+		prefixPathToPix=PATHTOPIX;
+		prefixPathToScripts=PATHTOSCRIPTS;
+		}
+	else
+		{
+		gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,GLADENAME,true,NULL);
+		prefixPathToPix=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"pixmaps",true,NULL);
+		prefixPathToScripts=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"scripts",true,NULL);
+		}
 
 
 	ui = glade_xml_new(gladepath, NULL, NULL);
