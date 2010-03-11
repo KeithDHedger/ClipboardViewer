@@ -75,7 +75,6 @@ int main(int argc, char **argv)
 				if (image!=NULL)
 					{
 					gdk_pixbuf_save(image,"./pastedimage.png", "png",NULL,NULL, NULL, NULL);
-					//g_free(image);
 					g_object_unref((gpointer) image);
 					}
 
