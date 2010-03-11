@@ -18,4 +18,4 @@ gchar			*prefixPathToScripts;
 
 GtkWindow		*mainwindow;
 GladeXML		*mainui;
-
+GtkClipboard		*mainclipboard;

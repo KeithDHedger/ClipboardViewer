@@ -12,8 +12,8 @@
 
 #include "globals.h"
 
-GladeXML	*ui;
-GtkClipboard	*mainclipboard;
+//GladeXML	*mainui;
+
 
 gboolean check(gpointer data)
 {
@@ -23,7 +23,7 @@ gboolean check(gpointer data)
 
 	if (gtk_clipboard_wait_is_text_available(mainclipboard)==true)
 		{
-		buffer=gtk_text_view_get_buffer (GTK_TEXT_VIEW (glade_xml_get_widget(ui,"textclip")));
+		buffer=gtk_text_view_get_buffer (GTK_TEXT_VIEW (glade_xml_get_widget(mainui,"textclip")));
 		gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
 		if (clipText==NULL)
 			return true;
@@ -33,20 +33,20 @@ gboolean check(gpointer data)
 		
 		if (g_ascii_strcasecmp(clipText,oldText)!=0)
 			gtk_text_buffer_set_text(buffer,clipText,-1);
-		gtk_notebook_set_current_page(GTK_NOTEBOOK(glade_xml_get_widget(ui,"cliptype")),0);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(glade_xml_get_widget(mainui,"cliptype")),0);
 		g_free(clipText);
 		g_free(oldText);
 		}
 
 	if (gtk_clipboard_wait_is_image_available(mainclipboard)==true)
 		{
-		GtkImage	*image=GTK_IMAGE(glade_xml_get_widget(ui,"imageclip"));
+		GtkImage	*image=GTK_IMAGE(glade_xml_get_widget(mainui,"imageclip"));
 		GdkPixbuf	*pixbuf=gtk_clipboard_wait_for_image(mainclipboard);
 		if (pixbuf==NULL)
 			return true;
 
 		gtk_image_set_from_pixbuf (image,pixbuf);
-		gtk_notebook_set_current_page(GTK_NOTEBOOK(glade_xml_get_widget(ui,"cliptype")),1);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(glade_xml_get_widget(mainui,"cliptype")),1);
 		g_object_unref(pixbuf);
 		}
 
@@ -55,7 +55,7 @@ gboolean check(gpointer data)
 
 void endProgram(GtkButton *button, gpointer window_ptr)
 {
-	gtk_main_quit();
+	gtk_main_qmainuit();
 }
 
 int main(int argc, char **argv)
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 
 	gtk_init(&argc,&argv);
 	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
+	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogmainui")==0)
 		{
 		if (argc>2 && g_ascii_strcasecmp(argv[2],"--image")==0)
 			{
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 		return 0;
 		}
 	program = gnome_program_init("ClipboardViewer", "0.1",
-                               LIBGNOMEUI_MODULE,
+                               LIBGNOMEmainui_MODULE,
                                argc, argv,
                                GNOME_PROGRAM_STANDARD_PROPERTIES,
                                GNOME_PARAM_HUMAN_READABLE_NAME, "ClipboardViewer",
@@ -119,11 +119,11 @@ int main(int argc, char **argv)
 		}
 
 
-	ui = glade_xml_new(gladepath, NULL, NULL);
-	window = GTK_WINDOW(glade_xml_get_widget(ui, "clipwindow"));
+	mainui = glade_xml_new(gladepath, NULL, NULL);
+	window = GTK_WINDOW(glade_xml_get_widget(mainui, "clipwindow"));
 	gtk_window_stick(GTK_WINDOW(window));
 	check(NULL);
-	glade_xml_signal_connect_data(ui,"endprogram",G_CALLBACK(endProgram),GUINT_TO_POINTER(window));
+	glade_xml_signal_connect_data(mainui,"endprogram",G_CALLBACK(endProgram),GmainuiNT_TO_POINTER(window));
 
 	g_timeout_add(1000,check,NULL);
 	gtk_main();

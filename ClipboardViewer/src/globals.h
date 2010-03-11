@@ -24,7 +24,7 @@ extern gchar			*prefixPathToPix;
 extern gchar			*prefixPathToScripts;
 extern GtkWindow		*mainwindow;
 extern GladeXML			*mainui;
-
+extern GtkClipboard		*mainclipboard;
 typedef struct mainSignals
 {
 	gchar	*name;
