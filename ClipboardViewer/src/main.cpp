@@ -1,48 +1,94 @@
-
-//Mon 31 Jul 2006 12:30:55 BST 
+//
+//Keith Hedger
+//Tue Jun 12 16:22:48 BST 2007
+//
+//clipboardview.cpp
+//
 
 #include <gnome.h>
 #include <glade/glade.h>
 #include <glib/gstdio.h>
 #include <glib.h>
 
-#include "globals.h"
+GladeXML	*ui;
+GtkClipboard	*mainclipboard;
 
-gint delete_event(GtkWidget *widget, GdkEvent event, gpointer data)
+gboolean check(gpointer data)
 {
-	g_printf("\n%s\n","BYE!");
+	GtkTextBuffer	*buffer;
+	GtkTextIter	startIter;
+	GtkTextIter	endIter;
+
+	if (gtk_clipboard_wait_is_text_available(mainclipboard)==true)
+		{
+		buffer=gtk_text_view_get_buffer (GTK_TEXT_VIEW (glade_xml_get_widget(ui,"textclip")));
+		gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+		if (clipText==NULL)
+			return true;
+		gtk_text_buffer_get_bounds(buffer,&startIter,&endIter);
+
+		gchar*	oldText=gtk_text_buffer_get_text(buffer,&startIter,&endIter,true);
+		
+		if (g_ascii_strcasecmp(clipText,oldText)!=0)
+			gtk_text_buffer_set_text(buffer,clipText,-1);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(glade_xml_get_widget(ui,"cliptype")),0);
+		g_free(clipText);
+		g_free(oldText);
+		}
+
+	if (gtk_clipboard_wait_is_image_available(mainclipboard)==true)
+		{
+		GtkImage	*image=GTK_IMAGE(glade_xml_get_widget(ui,"imageclip"));
+		GdkPixbuf	*pixbuf=gtk_clipboard_wait_for_image(mainclipboard);
+		if (pixbuf==NULL)
+			return true;
+
+		gtk_image_set_from_pixbuf (image,pixbuf);
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(glade_xml_get_widget(ui,"cliptype")),1);
+		g_object_unref(pixbuf);
+		}
+
+	return true;
+}
+
+void endProgram(GtkButton *button, gpointer window_ptr)
+{
 	gtk_main_quit();
-	return TRUE;
 }
-
-void runAScript(gchar *commandLine)
-{
-	g_warning("%s",commandLine);
-	g_spawn_command_line_sync(commandLine,NULL,NULL,NULL,NULL);
-}
-
-void doOk(GtkButton *button, gpointer window_ptr)
-{
-	g_printf("ok clicked\n");
-}
-
-void doCancel(GtkButton *button, gpointer window_ptr)
-{
-	g_printf("cancel clicked\n");
-}
-
-mainSignals theSignals[]={
-				{"okclicked",doOk},
-				{"cancelclicked",doCancel},
-				{NULL,NULL}
-			};
 
 int main(int argc, char **argv)
 {
-	
-	GnomeProgram	*program;
-	unsigned int	cnt=0;
 
+	GnomeProgram	*program;
+	GtkWindow	*window;
+	gchar		*gladepath;
+
+	gtk_init(&argc,&argv);
+	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
+		{
+		if (argc>2 && g_ascii_strcasecmp(argv[2],"--image")==0)
+			{
+			GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
+				if (image!=NULL)
+					{
+					gdk_pixbuf_save(image,"./pastedimage.png", "png",NULL,NULL, NULL, NULL);
+					g_free(image);
+					}
+
+			}
+		else
+			{
+	
+			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+			if (clipText!=NULL)
+				{
+				g_printf(clipText);
+				g_free(clipText);
+				}
+			}
+		return 0;
+		}
 	program = gnome_program_init("ClipboardViewer", "0.1",
                                LIBGNOMEUI_MODULE,
                                argc, argv,
@@ -50,30 +96,22 @@ int main(int argc, char **argv)
                                GNOME_PARAM_HUMAN_READABLE_NAME, "ClipboardViewer",
                                NULL);
 
-	if (g_file_test(GLADEFILE,G_FILE_TEST_EXISTS)==TRUE)
-		{
-		gladepath=GLADEFILE;
-		prefixPathToPix=PATHTOPIX;
-		prefixPathToScripts=PATHTOSCRIPTS;
-		}
-	else
-		{
-		gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,GLADENAME,true,NULL);
-		prefixPathToPix=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"pixmaps",true,NULL);
-		prefixPathToScripts=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"scripts",true,NULL);
-		}
+	gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,
+						"clipboardviewer.glade",
+						true,
+						NULL);
+	if (gladepath==NULL)
+		gladepath="clipviewer.glade";
 
-	mainui = glade_xml_new(gladepath, NULL, NULL);
-	mainwindow = GTK_WINDOW(glade_xml_get_widget(mainui, "mainwindow"));
-	g_signal_connect(mainwindow, "delete-event", G_CALLBACK(delete_event), NULL);
 
-	while (theSignals[cnt].name!=NULL)
-		{
-		glade_xml_signal_connect_data(mainui,theSignals[cnt].name,G_CALLBACK(theSignals[cnt].fptr),GUINT_TO_POINTER(mainwindow));
-		cnt++;
-		}
-	
+	ui = glade_xml_new(gladepath, NULL, NULL);
+	window = GTK_WINDOW(glade_xml_get_widget(ui, "clipwindow"));
+	gtk_window_stick(GTK_WINDOW(window));
+	check(NULL);
+	glade_xml_signal_connect_data(ui,"endprogram",G_CALLBACK(endProgram),GUINT_TO_POINTER(window));
+
+	g_timeout_add(1000,check,NULL);
 	gtk_main();
 	return 0;
-}
 
+}
