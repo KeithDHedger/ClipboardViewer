@@ -69,20 +69,17 @@ int main(int argc, char **argv)
 	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	if (argc>1 && g_ascii_strcasecmp(argv[1],"--noui")==0)
 		{
-		if (argc>2 && g_ascii_strcasecmp(argv[2],"--image")==0)
+		GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
+		
+		if (image!=NULL)
 			{
-			GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
-				if (image!=NULL)
-					{
-					gdk_pixbuf_save(image,"./pastedimage.png", "png",NULL,NULL, NULL, NULL);
-					g_object_unref((gpointer) image);
-					}
-
+			gdk_pixbuf_save(image,"./pastedimage.png", "png",NULL,NULL, NULL, NULL);
+			g_object_unref((gpointer) image);
 			}
 		else
 			{
-	
 			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+			
 			if (clipText!=NULL)
 				{
 				g_printf(clipText);
@@ -91,6 +88,8 @@ int main(int argc, char **argv)
 			}
 		return 0;
 		}
+		
+
 	program = gnome_program_init("ClipboardViewer", "0.1",
                                LIBGNOMEUI_MODULE,
                                argc, argv,
