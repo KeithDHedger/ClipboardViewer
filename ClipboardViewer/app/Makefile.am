@@ -13,4 +13,9 @@ install-exec-local:
 	$(shell cp ../resources/pixmaps/clipviewer.desktop /usr/share/applications/clipviewer.desktop)
 	$(shell update-menus)
 	$(shell echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> /usr/share/applications/clipviewer.desktop)
+	$(shell echo Exec=${prefix}/bin/clipboardviewer >> /usr/share/applications/clipviewer.desktop)
+
+uninstall-local:
+	$(shell rm /usr/share/applications/clipviewer.desktop)
+	$(shell update-menus)
 
