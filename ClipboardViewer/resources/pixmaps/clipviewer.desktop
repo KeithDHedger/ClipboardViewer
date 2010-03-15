@@ -6,5 +6,5 @@ Comment=Clipboard Viewer
 Exec=clipboardviewer
 Terminal=false
 Type=Application
-Categories=Development;
+Categories=Utility;
 Icon=/usr/local/share/ClipboardViewer/pixmaps/ClipboardViewer.png
