@@ -3,8 +3,7 @@ Version=1.0
 Encoding=UTF-8
 Name=Clipboard Viewer
 Comment=Clipboard Viewer
-Exec=clipboardviewer
 Terminal=false
 Type=Application
 Categories=Utility;
-Icon=/usr/local/share/ClipboardViewer/pixmaps/ClipboardViewer.png
+

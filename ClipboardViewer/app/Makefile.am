@@ -12,4 +12,5 @@ bin_PROGRAMS = clipboardviewer
 install-exec-local:
 	$(shell cp ../resources/pixmaps/clipviewer.desktop /usr/share/applications/clipviewer.desktop)
 	$(shell update-menus)
+	$(shell echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> /usr/share/applications/clipviewer.desktop)
 
