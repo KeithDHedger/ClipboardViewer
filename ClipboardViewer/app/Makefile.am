@@ -9,6 +9,8 @@ clipboardviewer_CXXFLAGS = -O3
 
 bin_PROGRAMS = clipboardviewer
 
+man1_MANS = ../resources/man/clipboardviewer.1
+
 install-exec-local:
 	$(shell cp ../resources/pixmaps/clipviewer.desktop /usr/share/applications/clipviewer.desktop)
 	$(shell update-menus)
