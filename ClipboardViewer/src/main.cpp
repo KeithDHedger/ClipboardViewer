@@ -67,6 +67,7 @@ int main(int argc, char **argv)
 
 	gtk_init(&argc,&argv);
 	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+
 	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
 		{
 		GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
@@ -87,6 +88,13 @@ int main(int argc, char **argv)
 				}
 			}
 		return 0;
+		}
+
+	if (argc>1)
+		{
+		printf("clipboardviewer %s: invalid option\n",argv[1]);
+		printf("Usage:	clipboardviewer [--nogui]\n");
+		return 1;
 		}
 		
 
@@ -114,7 +122,6 @@ int main(int argc, char **argv)
 		prefixPathToPix=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"pixmaps",true,NULL);
 		prefixPathToScripts=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"scripts",true,NULL);
 		}
-
 
 	mainui = glade_xml_new(gladepath, NULL, NULL);
 	window = GTK_WINDOW(glade_xml_get_widget(mainui, "clipwindow"));
