@@ -1,0 +1,28 @@
+.\" clipboardviewer
+.TH "clipboardviewer" "1" "1.0.0" "K.D.Hedger" "User Commands"
+.SH "NAME"
+clipboardviewer \- manual page for clipboardviewer 1.0.0
+.SH "SYNOPSIS"
+.B clipboardviewer
+[\fI\-\-nogui\fR]
+.SH "DESCRIPTION"
+A GUI to view the main clipboard contents ( text or pic ) or from the command line print the text contents to stdin or create a file in the current directory called pastedimage.png.
+The window is persistant will be updated regularly.
+
+.TP 
+\fB\-\-nogui\fR Do not create a window just print the contents to stdin or create a picture in the current folder
+.SH "EXAMPLES"
+.LP 
+Show the main clipboard window
+.IP 
+clipboardviewer
+.LP
+Print the contents of the clipboard to stdin or create a file in the current directory called pastedimage.png
+.IP 
+clipboardviewer \-\-nogui
+.LP 
+.SH "REPORTING BUGS"
+Report bugs to kdhedger@yahoo.co.uk
+
+
+
