@@ -1,0 +1,8 @@
+#!/bin/bash
+
+REV=$(svn status -u|awk '{ print $4 }')
+find . -iname .svn -exec rm -rf '{}' \;
+rm RandomPicGDM/background
+cd ..
+tar --exclude="makezip" -cvzf RandomPicGDM.${REV}.tgz ./RandomPicGDM
+
