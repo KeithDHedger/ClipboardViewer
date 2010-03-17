@@ -2,7 +2,6 @@
 
 REV=$(svn status -u|awk '{ print $4 }')
 find . -iname .svn -exec rm -rf '{}' \;
-rm RandomPicGDM/background
 cd ..
-tar --exclude="makezip" -cvzf RandomPicGDM.${REV}.tgz ./RandomPicGDM
+tar --exclude="makezip" -cvzf ClipboardViewer.${REV}.tgz ./ClipboardViewer
 
