@@ -71,9 +71,12 @@ int main(int argc, char **argv)
 	///tempname=(char*)malloc(20);
 	//strcpy(tempname,"pastedimageXXXXXX");
 	//mktemp((char*)tempname);
-	tempname=tempnam("./",".png");
+	tempname=tempnam("./","image");
+	strcat(tempname,".png");
 
-	printf("\n%s\n",tempname);
+
+	printf("%s\n",tempname);
+	free(tempname);
 	return 0;
 	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
 		{
