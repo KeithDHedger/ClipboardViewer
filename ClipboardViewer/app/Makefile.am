@@ -19,6 +19,8 @@ install-exec-local:
 	$(shell update-menus)
 	$(shell echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> /usr/share/applications/clipviewer.desktop)
 	$(shell echo Exec=${prefix}/bin/clipboardviewer >> /usr/share/applications/clipviewer.desktop)
+#	$(shell echo CLIPBIN=${prefix}/bin/clipboardviewer )
+	$(shell ln -s $(pkgdatadir)/scripts/MakeClipping ~/.gnome2/nautilus-scripts)
 
 uninstall-local:
 	$(shell rm /usr/share/applications/clipviewer.desktop)

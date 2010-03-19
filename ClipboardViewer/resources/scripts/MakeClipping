@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CLIPBIN="/media/LinuxData/Development64/Projects/ClipboardViewer/ClipboardViewer/app/clipboardviewer"
-DIRNAME=.
+#CLIPBIN="/media/LinuxData/Development64/Projects/ClipboardViewer/ClipboardViewer/app/clipboardviewer"
+#DIRNAME=.
 if [ $($CLIPBIN --query) = "image" ];then
 	$CLIPBIN --nogui > /dev/null
 else
