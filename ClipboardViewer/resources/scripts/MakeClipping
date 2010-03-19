@@ -1,0 +1,25 @@
+#!/bin/bash
+
+CLIPBIN="/media/LinuxData/Development64/Projects/ClipboardViewer/ClipboardViewer/app/clipboardviewer"
+DIRNAME=.
+if [ $($CLIPBIN --query) = "image" ];then
+	$CLIPBIN --nogui
+else
+
+	DATA=$( $CLIPBIN --nogui )
+	CLEANDATA=${DATA//\//}
+
+	TMPFILE=$(mktemp)
+
+	$CLIPBIN --nogui >> $TMPFILE
+
+	if (( ${#CLEANDATA} > 32 ));then
+		NEWNAME="${DIRNAME}/${CLEANDATA:0:15}...${CLEANDATA:(-14)}.textclip"
+		mv $TMPFILE "${NEWNAME}"
+	else
+		NEWNAME="${DIRNAME}/${CLEANDATA}.textclip"
+		mv $TMPFILE "$NEWNAME"
+	fi
+
+fi
+

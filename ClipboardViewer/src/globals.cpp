@@ -15,6 +15,7 @@
 gchar			*gladepath=NULL;
 gchar			*prefixPathToPix=PATHTOPIX;
 gchar			*prefixPathToScripts;
+char			*tempname;
 
 GtkWindow		*mainwindow;
 GladeXML		*mainui;

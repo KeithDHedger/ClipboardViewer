@@ -22,6 +22,8 @@
 extern gchar			*gladepath;
 extern gchar			*prefixPathToPix;
 extern gchar			*prefixPathToScripts;
+extern char			*tempname;
+
 extern GtkWindow		*mainwindow;
 extern GladeXML			*mainui;
 extern GtkClipboard		*mainclipboard;
