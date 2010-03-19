@@ -3,7 +3,7 @@
 CLIPBIN="/media/LinuxData/Development64/Projects/ClipboardViewer/ClipboardViewer/app/clipboardviewer"
 DIRNAME=.
 if [ $($CLIPBIN --query) = "image" ];then
-	$CLIPBIN --nogui
+	$CLIPBIN --nogui > /dev/null
 else
 
 	DATA=$( $CLIPBIN --nogui )

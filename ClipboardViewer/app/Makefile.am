@@ -11,6 +11,9 @@ bin_PROGRAMS = clipboardviewer
 
 man1_MANS = ../resources/man/clipboardviewer.1
 
+scriptfilesdir = $(pkgdatadir)/scripts
+scriptfiles_SCRIPTS = ../resources/scripts/MakeClipping
+
 install-exec-local:
 	$(shell cp ../resources/pixmaps/clipviewer.desktop /usr/share/applications/clipviewer.desktop)
 	$(shell update-menus)
