@@ -90,6 +90,24 @@ int main(int argc, char **argv)
 		return 0;
 		}
 
+	if (argc>1 && g_ascii_strcasecmp(argv[1],"--query")==0)
+		{
+			GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
+			if (image!=NULL)
+				{
+				printf("image\n");
+				g_object_unref((gpointer) image);
+				return 0;
+				}
+			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+			if (clipText!=NULL)
+				{
+				printf("text\n");
+				g_free(clipText);
+				return 0;
+				}
+		}
+
 	if (argc>1)
 		{
 		printf("clipboardviewer %s: invalid option\n",argv[1]);
