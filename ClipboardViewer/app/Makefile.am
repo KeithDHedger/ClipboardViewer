@@ -11,22 +11,22 @@ bin_PROGRAMS = clipboardviewer
 
 man1_MANS = ../resources/man/clipboardviewer.1
 
-install-exec-local:
-	$(shell cp ../resources/pixmaps/clipviewer.desktop /usr/share/applications/clipviewer.desktop)
-	$(shell update-menus)
+install-exec-hook:
+	cp ../resources/pixmaps/clipviewer.desktop /usr/share/applications/clipviewer.desktop
+	update-menus
 
-	$(shell mkdir -p $(pkgdatadir)/pixmaps)
-	$(shell cp ../resources/pixmaps/ClipboardViewer.png $(pkgdatadir)/pixmaps)
+	mkdir -p $(pkgdatadir)/pixmaps
+	cp ../resources/pixmaps/ClipboardViewer.png $(pkgdatadir)/pixmaps
 
-	$(shell echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> /usr/share/applications/clipviewer.desktop)
-	$(shell echo Exec=${prefix}/bin/clipboardviewer >> /usr/share/applications/clipviewer.desktop)
+	echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> /usr/share/applications/clipviewer.desktop
+	echo Exec=${prefix}/bin/clipboardviewer >> /usr/share/applications/clipviewer.desktop
 
-	$(shell mkdir -p $(pkgdatadir)/scripts)
-	$(shell echo -e "#!/bin/bash\n""CLIPBIN=${prefix}/bin/clipboardviewer\n" | cat - ../resources/scripts/MakeClipping > $(pkgdatadir)/scripts/MakeClipping)
-	$(shell chmod 755 $(pkgdatadir)/scripts/MakeClipping)
-	$(shell ln -s $(pkgdatadir)/scripts/MakeClipping ~/.gnome2/nautilus-scripts)
+	mkdir -p $(pkgdatadir)/scripts
+	echo -e "#!/bin/bash\n""CLIPBIN=${prefix}/bin/clipboardviewer\n" | cat - ../resources/scripts/MakeClipping > $(pkgdatadir)/scripts/MakeClipping
+	chmod 755 $(pkgdatadir)/scripts/MakeClipping
+	ln -s $(pkgdatadir)/scripts/MakeClipping ~/.gnome2/nautilus-scripts
 
-uninstall-local:
+uninstall-hook:
 	$(shell rm /usr/share/applications/clipviewer.desktop)
 	$(shell update-menus)
 	$(shell rm $(pkgdatadir)/scripts/MakeClipping)
