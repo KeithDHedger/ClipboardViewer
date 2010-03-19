@@ -1,7 +1,7 @@
-#!/bin/bash
-
-CLIPBIN=clipboardviewer
 DIRNAME=$(echo $NAUTILUS_SCRIPT_CURRENT_URI | cut -d'/' -f3- | sed 's/%20/ /g')
+x=$(pkgdatadir)
+#zenity --info --text="$CLIPBIN $DIRNAME"
+#exit 0
 if [ $($CLIPBIN --query) = "image" ];then
 	$CLIPBIN --nogui > /dev/null
 else
