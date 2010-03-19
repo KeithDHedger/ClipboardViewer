@@ -116,7 +116,7 @@ int main(int argc, char **argv)
 	if (argc>1)
 		{
 		printf("clipboardviewer %s: invalid option\n",argv[1]);
-		printf("Usage:	clipboardviewer [--nogui]\n");
+		printf("Usage:	clipboardviewer [--nogui] [--query]\n");
 		return 1;
 		}
 		
