@@ -71,9 +71,6 @@ int main(int argc, char **argv)
 	tempname=tempnam("./","image");
 	strcat(tempname,".png");
 
-	//printf("%s\n",tempname);
-	//free(tempname);
-	//return 0;
 	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
 		{
 		GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
