@@ -68,24 +68,22 @@ int main(int argc, char **argv)
 	gtk_init(&argc,&argv);
 	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 
-	///tempname=(char*)malloc(20);
-	//strcpy(tempname,"pastedimageXXXXXX");
-	//mktemp((char*)tempname);
 	tempname=tempnam("./","image");
 	strcat(tempname,".png");
 
-
-	printf("%s\n",tempname);
-	free(tempname);
-	return 0;
+	//printf("%s\n",tempname);
+	//free(tempname);
+	//return 0;
 	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
 		{
 		GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
 		
 		if (image!=NULL)
 			{
-			gdk_pixbuf_save(image,"./pastedimage.png", "png",NULL,NULL, NULL, NULL);
+			gdk_pixbuf_save(image,tempname, "png",NULL,NULL, NULL, NULL);
 			g_object_unref((gpointer) image);
+			g_printf(tempname);
+			free(tempname);
 			}
 		else
 			{
