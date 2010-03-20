@@ -17,15 +17,11 @@ gladefiles_DATA = ../resources/glade/ClipboardViewer.glade
 pixmapsdir = $(pkgdatadir)/pixmaps
 pixmaps_DATA = ../resources/pixmaps/ClipboardViewer.png
 
-#scriptsdir = $(pkgdatadir)/scripts
-#scripts_DATA = ../resources/scripts/README
-
 install-exec-hook:
 	cp ../resources/pixmaps/clipviewer.desktop /usr/share/applications/clipviewer.desktop
 	echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> /usr/share/applications/clipviewer.desktop
 	echo Exec=${prefix}/bin/clipboardviewer >> /usr/share/applications/clipviewer.desktop
 	update-menus
-
 
 	mkdir -p $(pkgdatadir)/scripts
 	echo -e "#!/bin/bash\n""CLIPBIN=${prefix}/bin/clipboardviewer\n" | cat - ../resources/scripts/MakeClipping > $(pkgdatadir)/scripts/MakeClipping
@@ -33,13 +29,8 @@ install-exec-hook:
 	ln -sf $(pkgdatadir)/scripts/MakeClipping ~/.gnome2/nautilus-scripts
 
 uninstall-hook:
-#	$(shell rm /usr/share/applications/clipviewer.desktop)
-#	$(shell update-menus)
-#	$(shell rm $(pkgdatadir)/scripts/MakeClipping)
-#	$(shell rmdir $(pkgdatadir)/scripts)
-#	$(shell rm $(pkgdatadir)/pixmaps/ClipboardViewer.png)
-#	$(shell rmdir $(pkgdatadir)/pixmaps)
-#	$(shell rm $(pkgdatadir)/ClipboardViewer.glade)
-#	$(shell rmdir $(pkgdatadir))
-#	$(shell rm ~/.gnome2/nautilus-scripts/MakeClipping)
+	rm -f /usr/share/applications/clipviewer.desktop
+	update-menus
+	rm -fr $(pkgdatadir)
+	rm -f ~/.gnome2/nautilus-scripts/MakeClipping
 
