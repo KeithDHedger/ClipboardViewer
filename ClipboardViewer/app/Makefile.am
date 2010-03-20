@@ -23,7 +23,6 @@ install-exec-hook:
 	echo Exec=${prefix}/bin/clipboardviewer >> /usr/share/applications/clipviewer.desktop
 	update-menus
 
-
 	mkdir -p $(pkgdatadir)/scripts
 	echo -e "#!/bin/bash\n""CLIPBIN=${prefix}/bin/clipboardviewer\n" | cat - ../resources/scripts/MakeClipping > $(pkgdatadir)/scripts/MakeClipping
 	chmod 755 $(pkgdatadir)/scripts/MakeClipping
