@@ -24,7 +24,7 @@ install-exec-hook:
 	update-menus
 
 	mkdir -p $(pkgdatadir)/scripts
-	awk ' {sub(/XXXX/,"${prefix}/bin/clipboardviewer");print; }' ../resources/scripts/MakeClipping > $(pkgdatadir)/scripts/MakeClipping
+	awk ' {sub(/XXXX/,"${prefix}/bin/clipboardviewer");print; }' ../resources/scripts/form > $(pkgdatadir)/scripts/MakeClipping
 	chmod 755 $(pkgdatadir)/scripts/MakeClipping
 	ln -sf $(pkgdatadir)/scripts/MakeClipping ~/.gnome2/nautilus-scripts
 
