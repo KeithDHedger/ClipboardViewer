@@ -7,6 +7,7 @@ mkdir -p /media/LinuxData/Development/PKGS/ClipboardViewer
 
 make install DESTDIR=/media/LinuxData/Development/PKGS/ClipboardViewer
 
-ln -sf /media/LinuxData/Development/PKGS/ClipboardViewer/usr/local/share/ClipboardViewer/scripts/MakeClipping ~/.gnome2/nautilus-scripts
+ln -sf /usr/local/share/ClipboardViewer/scripts/MakeClipping ~/.gnome2/nautilus-scripts
 cd /media/LinuxData/Development/PKGS/ClipboardViewer
 /sbin/makepkg -l y -c n ../ClipboardViewer-svn-rev-$REV-X86_64-1.tgz
+
