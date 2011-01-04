@@ -18,20 +18,21 @@ pixmapsdir = $(pkgdatadir)/pixmaps
 pixmaps_DATA = ../resources/pixmaps/ClipboardViewer.png
 
 install-exec-hook:
-	cp ../resources/pixmaps/clipviewer.desktop /usr/share/applications/clipviewer.desktop
-	echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> /usr/share/applications/clipviewer.desktop
-	echo Exec=${prefix}/bin/clipboardviewer >> /usr/share/applications/clipviewer.desktop
-	update-menus
+	mkdir -p $(DESTDIR)/usr/share/applications
+	cp ../resources/pixmaps/clipviewer.desktop $(DESTDIR)/usr/share/applications/clipviewer.desktop
+	echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> $(DESTDIR)/usr/share/applications/clipviewer.desktop
+	echo Exec=${prefix}/bin/clipboardviewer >> $(DESTDIR)/usr/share/applications/clipviewer.desktop
+#	update-menus
 
-	mkdir -p $(pkgdatadir)/scripts
-	awk ' {sub(/XXXX/,"${prefix}/bin/clipboardviewer");print; }' ../resources/scripts/form > $(pkgdatadir)/scripts/MakeClipping
-	chmod 755 $(pkgdatadir)/scripts/MakeClipping
-	ln -sf $(pkgdatadir)/scripts/MakeClipping ~/.gnome2/nautilus-scripts
+	mkdir -p $(DESTDIR)/$(pkgdatadir)/scripts
+	awk ' {sub(/XXXX/,"${prefix}/bin/clipboardviewer");print; }' ../resources/scripts/form > $(DESTDIR)/$(pkgdatadir)/scripts/MakeClipping
+	chmod 755 $(DESTDIR)/$(pkgdatadir)/scripts/MakeClipping
+#	ln -sf $(pkgdatadir)/scripts/MakeClipping ~/.gnome2/nautilus-scripts
 
 
 uninstall-hook:
-	rm -f /usr/share/applications/clipviewer.desktop
-	update-menus
-	rm -fr $(pkgdatadir)
+	rm -f $(DESTDIR)/usr/share/applications/clipviewer.desktop
+#	update-menus
+	rm -fr $(DESTDIR)/$(pkgdatadir)
 	rm -f ~/.gnome2/nautilus-scripts/MakeClipping
 
