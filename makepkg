@@ -1,1 +1,12 @@
-#!/bin/bash -e
+#!/bin/bash
+
+REV=$(svn up|awk '{print $3'})
+REV=${REV%.*}
+
+mkdir -p /media/LinuxData/Development/Projects/PKGS/ClipboardViewer
+
+make install DESTDIR=/media/LinuxData/Development/Projects/PKGS/ClipboardViewer
+
+
+cd /media/LinuxData/Development/Projects/PKGS
+/sbin/makepkg -l y -c n ../ClipboardViewer-$REV-X86_44-1.tgz
