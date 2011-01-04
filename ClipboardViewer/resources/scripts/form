@@ -4,7 +4,8 @@ CLIPBIN="XXXX"
 DIRNAME=$(echo $NAUTILUS_SCRIPT_CURRENT_URI | cut -d'/' -f3- | sed 's/%20/ /g')
 
 if [ $($CLIPBIN --query) = "image" ];then
-	$CLIPBIN --nogui > /dev/null
+	IMAGEFILE=$($CLIPBIN --nogui)
+	convert "$IMAGEFILE" "${IMAGEFILE%.*}.jpg"
 else
 
 	DATA=$( $CLIPBIN --nogui )
