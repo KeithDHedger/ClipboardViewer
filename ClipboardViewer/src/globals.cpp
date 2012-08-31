@@ -5,7 +5,7 @@
 //globals.cpp
 //
 
-#include <gnome.h>
+//#include <gnome.h>
 #include <glade/glade.h>
 #include <glib/gstdio.h>
 #include <glib.h>

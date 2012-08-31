@@ -5,12 +5,14 @@
 //clipboardview.cpp
 //
 
-#include <gnome.h>
+//#include <gnome.h>
 #include <glade/glade.h>
 #include <glib/gstdio.h>
 #include <glib.h>
 
 #include "globals.h"
+#include <string.h>
+#include <stdlib.h>
 
 //GladeXML	*mainui;
 
@@ -61,7 +63,7 @@ void endProgram(GtkButton *button, gpointer window_ptr)
 int main(int argc, char **argv)
 {
 
-	GnomeProgram	*program;
+//	GnomeProgram	*program;
 	GtkWindow	*window;
 	gchar		*gladepath;
 
@@ -121,29 +123,32 @@ int main(int argc, char **argv)
 		}
 		
 
-	program = gnome_program_init("ClipboardViewer", "0.1",
-                               LIBGNOMEUI_MODULE,
-                               argc, argv,
-                               GNOME_PROGRAM_STANDARD_PROPERTIES,
-                               GNOME_PARAM_HUMAN_READABLE_NAME, "ClipboardViewer",
-                               NULL);
+//	program = gnome_program_init("ClipboardViewer", "0.1",
+//                               LIBGNOMEUI_MODULE,
+  //                             argc, argv,
+    //                           GNOME_PROGRAM_STANDARD_PROPERTIES,
+      //                         GNOME_PARAM_HUMAN_READABLE_NAME, "ClipboardViewer",
+        //                       NULL);
 
-	gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,
-						"clipboardviewer.glade",
-						true,
-						NULL);
+//	gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,
+//						"clipboardviewer.glade",
+//						true,
+//						NULL);
 
 	if (g_file_test(GLADEFILE,G_FILE_TEST_EXISTS)==TRUE)
 		{
-		gladepath=GLADEFILE;
-		prefixPathToPix=PATHTOPIX;
-		prefixPathToScripts=PATHTOSCRIPTS;
+			gladepath=GLADEFILE;
+			prefixPathToPix=PATHTOPIX;
+			prefixPathToScripts=PATHTOSCRIPTS;
 		}
 	else
 		{
-		gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,GLADENAME,true,NULL);
-		prefixPathToPix=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"pixmaps",true,NULL);
-		prefixPathToScripts=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"scripts",true,NULL);
+			asprintf(&gladepath,"%s","/usr/share/ClipboardViewer/ClipboardViewer.glade");
+			asprintf(&prefixPathToPix,"%s","/usr/share/ClipboardViewer/pixmaps");
+			asprintf(&prefixPathToScripts,"%s","/usr/share/ClipboardViewer/scripts");
+//		gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,GLADENAME,true,NULL);
+//		prefixPathToPix=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"pixmaps",true,NULL);
+//		prefixPathToScripts=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"scripts",true,NULL);
 		}
 
 	mainui = glade_xml_new(gladepath, NULL, NULL);
