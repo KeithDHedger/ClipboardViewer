@@ -1,8 +1,11 @@
 #!/bin/bash
 
-cp -r . /tmp/ClipboardViewer
+REV="$(svn status -u|awk '{ print $4 }')"
+echo "xxx$REV-ccc"
 exit
-REV=$(svn status -u|awk '{ print $4 }')
+cp -r . /tmp/ClipboardViewer
+cd /tmp/ClipboardViewer
+echo "xxx$REV-ccc"
 find . -iname .svn -exec rm -rf '{}' \;
 cd ..
 tar --exclude="makezip" -cvzf ClipboardViewer.${REV}.tgz ./ClipboardViewer
