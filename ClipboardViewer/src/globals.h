@@ -5,7 +5,6 @@
 //globals.h
 //
 
-//#include <gnome.h>
 #include <glade/glade.h>
 #include <glib/gstdio.h>
 #include <glib.h>
@@ -18,13 +17,14 @@
 #define PROGRAMNAME "ClipboardViewer"
 #define GLADEFILE "../resources/glade/"PROGRAMNAME".glade"
 #define GLADENAME PROGRAMNAME".glade"
+#define VERSION "0.1.0"
 
 extern gchar			*gladepath;
 extern gchar			*prefixPathToPix;
 extern gchar			*prefixPathToScripts;
-extern char			*tempname;
+extern char				*tempname;
 
-extern GtkWindow		*mainwindow;
+extern GtkWindow			*mainwindow;
 extern GladeXML			*mainui;
 extern GtkClipboard		*mainclipboard;
 typedef struct mainSignals

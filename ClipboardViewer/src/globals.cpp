@@ -5,7 +5,6 @@
 //globals.cpp
 //
 
-//#include <gnome.h>
 #include <glade/glade.h>
 #include <glib/gstdio.h>
 #include <glib.h>
@@ -19,4 +18,4 @@ char			*tempname;
 
 GtkWindow		*mainwindow;
 GladeXML		*mainui;
-GtkClipboard		*mainclipboard;
+GtkClipboard	*mainclipboard;

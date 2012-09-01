@@ -5,7 +5,6 @@
 //clipboardview.cpp
 //
 
-//#include <gnome.h>
 #include <glade/glade.h>
 #include <glib/gstdio.h>
 #include <glib.h>
@@ -13,9 +12,6 @@
 #include "globals.h"
 #include <string.h>
 #include <stdlib.h>
-
-//GladeXML	*mainui;
-
 
 gboolean check(gpointer data)
 {
@@ -62,8 +58,6 @@ void endProgram(GtkButton *button, gpointer window_ptr)
 
 int main(int argc, char **argv)
 {
-
-//	GnomeProgram	*program;
 	GtkWindow	*window;
 	gchar		*gladepath;
 
@@ -117,23 +111,10 @@ int main(int argc, char **argv)
 
 	if (argc>1)
 		{
-		printf("clipboardviewer %s: invalid option\n",argv[1]);
+		printf("clipboardviewer %s\n%s: invalid option\n",VERSION,argv[1]);
 		printf("Usage:	clipboardviewer [--nogui] [--query]\n");
 		return 1;
 		}
-		
-
-//	program = gnome_program_init("ClipboardViewer", "0.1",
-//                               LIBGNOMEUI_MODULE,
-  //                             argc, argv,
-    //                           GNOME_PROGRAM_STANDARD_PROPERTIES,
-      //                         GNOME_PARAM_HUMAN_READABLE_NAME, "ClipboardViewer",
-        //                       NULL);
-
-//	gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,
-//						"clipboardviewer.glade",
-//						true,
-//						NULL);
 
 	if (g_file_test(GLADEFILE,G_FILE_TEST_EXISTS)==TRUE)
 		{
@@ -146,9 +127,6 @@ int main(int argc, char **argv)
 			asprintf(&gladepath,"%s","/usr/share/ClipboardViewer/ClipboardViewer.glade");
 			asprintf(&prefixPathToPix,"%s","/usr/share/ClipboardViewer/pixmaps");
 			asprintf(&prefixPathToScripts,"%s","/usr/share/ClipboardViewer/scripts");
-//		gladepath=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,GLADENAME,true,NULL);
-//		prefixPathToPix=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"pixmaps",true,NULL);
-//		prefixPathToScripts=gnome_program_locate_file(program,GNOME_FILE_DOMAIN_APP_DATADIR,"scripts",true,NULL);
 		}
 
 	mainui = glade_xml_new(gladepath, NULL, NULL);
@@ -160,5 +138,4 @@ int main(int argc, char **argv)
 	g_timeout_add(1000,check,NULL);
 	gtk_main();
 	return 0;
-
 }
