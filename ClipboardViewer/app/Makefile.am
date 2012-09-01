@@ -22,17 +22,12 @@ install-exec-hook:
 	cp ../resources/pixmaps/clipviewer.desktop $(DESTDIR)/usr/share/applications/clipviewer.desktop
 	echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> $(DESTDIR)/usr/share/applications/clipviewer.desktop
 	echo Exec=${prefix}/bin/clipboardviewer >> $(DESTDIR)/usr/share/applications/clipviewer.desktop
-#	update-menus
 
 	mkdir -p $(DESTDIR)/$(pkgdatadir)/scripts
 	awk ' {sub(/XXXX/,"${prefix}/bin/clipboardviewer");print; }' ../resources/scripts/form > $(DESTDIR)/$(pkgdatadir)/scripts/MakeClipping
 	chmod 755 $(DESTDIR)/$(pkgdatadir)/scripts/MakeClipping
-#	ln -sf $(pkgdatadir)/scripts/MakeClipping ~/.gnome2/nautilus-scripts
-
 
 uninstall-hook:
 	rm -f $(DESTDIR)/usr/share/applications/clipviewer.desktop
-#	update-menus
 	rm -fr $(DESTDIR)/$(pkgdatadir)
-	rm -f ~/.gnome2/nautilus-scripts/MakeClipping
 
