@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-VERSION=0.1.0
+VERSION=1.50.0
 
 cd /tmp
 svn co file:///media/LinuxData/Development/SVN/ClipboardViewer
