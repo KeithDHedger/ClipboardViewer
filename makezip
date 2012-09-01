@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cp -r . /tmp/ClipboardViewer
+exit
 REV=$(svn status -u|awk '{ print $4 }')
 find . -iname .svn -exec rm -rf '{}' \;
 cd ..
