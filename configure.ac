@@ -1,6 +1,6 @@
 #
 #
-AC_INIT([ClipboardViewer],[0.1],[XXX],[ClipboardViewer])
+AC_INIT([ClipboardViewer],[0.2.0],[XXX],[ClipboardViewer])
 
 AC_CONFIG_HEADER([config.h])
 AC_PROG_CXX
@@ -20,15 +20,10 @@ AC_SUBST(CXXFLAGS)
 CFLAGS=-Wall
 AC_SUBST(CFLAGS)
 
-#GNOME_MODULES="libgnomeui-2.0 >= 2.0.0"
-#PKG_CHECK_MODULES(GNOME, $GNOME_MODULES)
-#AC_SUBST(GNOME_CFLAGS)
-#AC_SUBST(GNOME_LIBS)
+GTK_MODULES="gtk+-2.0 >= 2.24.0"
+PKG_CHECK_MODULES(GTK, $GTK_MODULES)
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
 
-GLADE_MODULES="libglade-2.0 >= 2.0.0"
-PKG_CHECK_MODULES(GLADE, $GLADE_MODULES)
-AC_SUBST(GLADE_CFLAGS)
-AC_SUBST(GLADE_LIBS)
-
-AC_OUTPUT(Makefile ClipboardViewer/app/Makefile ClipboardViewer/debug/Makefile)#***MMM***
+AC_OUTPUT(Makefile ClipboardViewer/app/Makefile)#***MMM***
 
