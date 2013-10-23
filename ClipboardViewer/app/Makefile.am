@@ -11,23 +11,22 @@ bin_PROGRAMS = clipboardviewer
 
 man1_MANS = ../resources/man/clipboardviewer.1
 
-gladefilesdir = $(pkgdatadir)
-gladefiles_DATA = ../resources/glade/ClipboardViewer.glade
+docfilesdir = $(pkgdatadir)/docs
+docfiles_DATA = ../resources/docs/*
 
 pixmapsdir = $(pkgdatadir)/pixmaps
-pixmaps_DATA = ../resources/pixmaps/ClipboardViewer.png
+pixmaps_DATA = ../resources/pixmaps/*
 
 install-exec-hook:
-	mkdir -p $(DESTDIR)/usr/share/applications
-	cp ../resources/pixmaps/clipviewer.desktop $(DESTDIR)/usr/share/applications/clipviewer.desktop
-	echo Icon=${prefix}/share/ClipboardViewer/pixmaps/ClipboardViewer.png >> $(DESTDIR)/usr/share/applications/clipviewer.desktop
-	echo Exec=${prefix}/bin/clipboardviewer >> $(DESTDIR)/usr/share/applications/clipviewer.desktop
 
-	mkdir -p $(DESTDIR)/$(pkgdatadir)/scripts
-	awk ' {sub(/XXXX/,"${prefix}/bin/clipboardviewer");print; }' ../resources/scripts/form > $(DESTDIR)/$(pkgdatadir)/scripts/MakeClipping
-	chmod 755 $(DESTDIR)/$(pkgdatadir)/scripts/MakeClipping
+	mkdir -vp $(DESTDIR)${prefix}/share/applications $(DESTDIR)${prefix}/share/pixmaps||true
+
+	cp ../resources/pixmaps/clipviewer.desktop $(DESTDIR)${prefix}/share/applications/clipviewer.desktop
+	cp ../resources/pixmaps/ClipboardViewer.png $(DESTDIR)${prefix}/share/pixmaps
+#	echo Icon=ClipboardViewer.png >> $(DESTDIR)${prefix}/share/applications/clipviewer.desktop
+#	echo Exec=clipboardviewer >> $(DESTDIR)${prefix}/share/applications/clipviewer.desktop
 
 uninstall-hook:
-	rm -f $(DESTDIR)/usr/share/applications/clipviewer.desktop
+	rm -f $(DESTDIR)${prefix}/share/applications/clipviewer.desktop $(DESTDIR)${prefix}/share/pixmaps/ClipboardViewer.png
 	rm -fr $(DESTDIR)/$(pkgdatadir)
 

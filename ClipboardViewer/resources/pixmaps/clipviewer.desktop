@@ -1,8 +1,8 @@
 [Desktop Entry]
-Version=1.0
-Encoding=UTF-8
 Name=Clipboard Viewer
-Comment=Clipboard Viewer
+Comment=Gtk Clipboard Viewer
 Terminal=false
 Type=Application
 Categories=Utility;
+Icon=ClipboardViewer.png
+Exec=clipboardviewer

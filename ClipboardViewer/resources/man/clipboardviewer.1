@@ -1,31 +1,47 @@
-.\" clipboardviewer
-.TH "clipboardviewer" "1" "1.0.35" "K.D.Hedger" "User Commands"
+.TH "clipboardviewer" "1" "0.2.0" "K.D.Hedger" "User Commands"
 .SH "NAME"
-clipboardviewer \- manual page for clipboardviewer 1.0.35
+clipboardviewer - manual page for clipboardviewer 1.0.35
+.br
+
 .SH "SYNOPSIS"
-.B clipboardviewer
-[\fI\-\-nogui\fR]
-[\fI\-\-query\fR]
+\fBclipboardviewer \fR[\fI--nogui\fR] [\fI--query\fR]
+.br
+
 .SH "DESCRIPTION"
 A GUI to view the main clipboard contents ( text or pic ) or from the command line print the text contents to stdin or create a .png image file in the current directory.
-The window is persistant and will be updated regularly.
+.br
 
-.TP 
-\fB\-\-nogui\fR Do not create a window just print the contents to stdin or create a picture in the current folder
-.TP 
-\fB\-\-query\fR Print type of data on clipboard ( image or text )
+The window is persistant and will be updated regularly.
+.br
+It can also be made ( the default ) to 'stick' to all workspaces above all over windows.
+.br
+
+.SH "OPTIONS"
+\fB--nogui\fR Do not create a window just print the contents to stdin or create a picture in the current folder
+.br
+
+\fB--query\fR Print type of data on clipboard ( image or text )
+.br
+
 .SH "EXAMPLES"
-.LP 
 Show the main clipboard window
-.IP 
-clipboardviewer
-.LP 
+.br
+
+       clipboardviewer
+.br
+
 Print the contents of the clipboard to stdin or create a file in the current directory
-.IP 
-clipboardviewer \-\-nogui
-.LP 
+.br
+
+       clipboardviewer --nogui
+.br
+
 Print the type of data on the clipboard ( text or image )
-.IP 
-clipboardviewer \-\-query
+.br
+
+       clipboardviewer --query
+.br
+
 .SH "REPORTING BUGS"
-Report bugs to kdhedger@yahoo.co.uk
+Report bugs to kdhedger68713@gmail.com
+.br

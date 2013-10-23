@@ -23,6 +23,10 @@ GtkWidget*		textBox=NULL;
 GtkWidget*		viewBox=NULL;
 GtkWidget*		bufferBox=NULL;
 GtkWidget*		window=NULL;
+GtkWidget*		notebook=NULL;
+GtkWidget*		scrollPicBox=NULL;
+GtkWidget*		imageBox=NULL;
+
 //GtkWidget*		badWordLabel=NULL;
 
 //spellcheck
