@@ -23,8 +23,6 @@ install-exec-hook:
 
 	cp ../resources/pixmaps/clipviewer.desktop $(DESTDIR)${prefix}/share/applications/clipviewer.desktop
 	cp ../resources/pixmaps/ClipboardViewer.png $(DESTDIR)${prefix}/share/pixmaps
-#	echo Icon=ClipboardViewer.png >> $(DESTDIR)${prefix}/share/applications/clipviewer.desktop
-#	echo Exec=clipboardviewer >> $(DESTDIR)${prefix}/share/applications/clipviewer.desktop
 
 uninstall-hook:
 	rm -f $(DESTDIR)${prefix}/share/applications/clipviewer.desktop $(DESTDIR)${prefix}/share/pixmaps/ClipboardViewer.png
