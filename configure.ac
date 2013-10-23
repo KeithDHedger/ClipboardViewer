@@ -1,6 +1,6 @@
 #
 #
-AC_INIT([ClipboardViewer],[0.2.0],[XXX],[ClipboardViewer])
+AC_INIT([ClipboardViewer],[2.0],[XXX],[ClipboardViewer])
 
 AC_CONFIG_HEADER([config.h])
 AC_PROG_CXX
@@ -25,5 +25,5 @@ PKG_CHECK_MODULES(GTK, $GTK_MODULES)
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
-AC_OUTPUT(Makefile ClipboardViewer/app/Makefile)#***MMM***
+AC_OUTPUT(Makefile ClipboardViewer/app/Makefile)
 
