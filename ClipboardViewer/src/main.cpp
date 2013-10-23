@@ -107,7 +107,7 @@ void buildMainGui(void)
 	GtkWidget*	image;
 
 	window=gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title((GtkWindow*)window,"Aspell GUI");
+	gtk_window_set_title((GtkWindow*)window,"Clipboard");
 	gtk_window_set_default_size((GtkWindow*)window,320,60);
 	vbox=gtk_vbox_new(false,8);
 
@@ -127,17 +127,6 @@ void buildMainGui(void)
 	g_signal_connect_after(G_OBJECT(button),"clicked",G_CALLBACK(doAbout),NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,4);
 
-//	button=gtk_button_new_from_stock(GTK_STOCK_SPELL_CHECK);
-//	g_signal_connect(G_OBJECT(button),"clicked",G_CALLBACK(doSpellCheckDoc),NULL);
-//	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,2);
-
-//	image=gtk_image_new_from_stock(GTK_STOCK_SPELL_CHECK,GTK_ICON_SIZE_MENU);
-//	button=gtk_button_new_with_label("Check Word");
-//	gtk_button_set_image((GtkButton*)button,image);
-
-//	g_signal_connect(G_OBJECT(button),"clicked",G_CALLBACK(checkWord),NULL);
-//	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,2);
-
 	button=gtk_toggle_button_new_with_label("Un-Stick");
 	gtk_toggle_button_set_active((GtkToggleButton*)button,true);
 	g_signal_connect(G_OBJECT(button),"clicked",G_CALLBACK(doSticky),NULL);
@@ -155,7 +144,66 @@ void buildMainGui(void)
 int main(int argc, char **argv)
 {
 	gtk_init(&argc,&argv);
+
+	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+
+	tempname=tempnam("./","image");
+	strcat(tempname,".png");
+
+	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
+		{
+		GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
+		
+		if (image!=NULL)
+			{
+			gdk_pixbuf_save(image,tempname, "png",NULL,NULL, NULL, NULL);
+			g_object_unref((gpointer) image);
+			printf(tempname);
+			free(tempname);
+			}
+		else
+			{
+			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+			
+			if (clipText!=NULL)
+				{
+				printf(clipText);
+				free(clipText);
+				}
+			}
+		return 0;
+		}
+
+	if (argc>1 && g_ascii_strcasecmp(argv[1],"--query")==0)
+		{
+			GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
+			if (image!=NULL)
+				{
+				printf("image\n");
+				g_object_unref((gpointer) image);
+				return 0;
+				}
+			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+			if (clipText!=NULL)
+				{
+				printf("text\n");
+				g_free(clipText);
+				return 0;
+				}
+		}
+
+	if (argc>1)
+		{
+		printf("clipboardviewer %s\n%s: invalid option\n",VERSION,argv[1]);
+		printf("Usage:	clipboardviewer [--nogui] [--query]\n");
+		return 1;
+		}
+
+
+
 	buildMainGui();
+	gtk_window_stick(GTK_WINDOW(window));
+	gtk_window_set_keep_above((GtkWindow*)window,true);
 	gtk_widget_show_all(window);
 	gtk_main();
 }

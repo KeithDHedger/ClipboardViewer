@@ -12,11 +12,11 @@
 //gchar			*gladepath=NULL;
 //gchar			*prefixPathToPix=PATHTOPIX;
 //gchar			*prefixPathToScripts;
-//char			*tempname;
+char*			tempname;
 //
 //GtkWindow		*mainwindow;
 //GladeXML		*mainui;
-//GtkClipboard	*mainclipboard;
+GtkClipboard	*mainclipboard;
 
 GtkWidget*		scrollBox=NULL;
 GtkWidget*		textBox=NULL;
