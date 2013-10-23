@@ -5,14 +5,14 @@
 //clipboardview.cpp
 //
 
-#include <glade/glade.h>
-#include <glib/gstdio.h>
-#include <glib.h>
+#include <stdlib.h>
+#include <gtk/gtk.h>
+#include <string.h>
+#include <sys/stat.h>
 
 #include "globals.h"
-#include <string.h>
-#include <stdlib.h>
 
+#if 0
 gboolean check(gpointer data)
 {
 	GtkTextBuffer	*buffer;
@@ -50,7 +50,7 @@ gboolean check(gpointer data)
 
 	return true;
 }
-
+#endif
 void doShutdown(GtkButton *button, gpointer window_ptr)
 {
 	gtk_main_quit();

@@ -1,5 +1,5 @@
 
-SUBDIRS = ClipboardViewer/app ClipboardViewer/debug#***MMM***
+SUBDIRS = ClipboardViewer/app
 
 remake:
 	$(shell ./remakesourcelist)

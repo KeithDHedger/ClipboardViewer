@@ -5,21 +5,18 @@
 //globals.cpp
 //
 
-#include <glade/glade.h>
-#include <glib/gstdio.h>
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "globals.h"
 
-gchar			*gladepath=NULL;
-gchar			*prefixPathToPix=PATHTOPIX;
-gchar			*prefixPathToScripts;
-char			*tempname;
-
-GtkWindow		*mainwindow;
-GladeXML		*mainui;
-GtkClipboard	*mainclipboard;
-
+//gchar			*gladepath=NULL;
+//gchar			*prefixPathToPix=PATHTOPIX;
+//gchar			*prefixPathToScripts;
+//char			*tempname;
+//
+//GtkWindow		*mainwindow;
+//GladeXML		*mainui;
+//GtkClipboard	*mainclipboard;
 
 GtkWidget*		scrollBox=NULL;
 GtkWidget*		textBox=NULL;
