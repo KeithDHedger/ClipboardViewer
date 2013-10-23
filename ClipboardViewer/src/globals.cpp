@@ -1,6 +1,6 @@
 //
 //Keith Hedger
-//Wed Apr 18 18:07:43 BST 2007
+//Wed Apr 18 18:07:43 BST 2007-2013
 //
 //globals.cpp
 //
@@ -9,13 +9,7 @@
 
 #include "globals.h"
 
-//gchar			*gladepath=NULL;
-//gchar			*prefixPathToPix=PATHTOPIX;
-//gchar			*prefixPathToScripts;
 char*			tempname;
-//
-//GtkWindow		*mainwindow;
-//GladeXML		*mainui;
 GtkClipboard	*mainclipboard;
 
 GtkWidget*		scrollBox=NULL;
@@ -26,15 +20,3 @@ GtkWidget*		window=NULL;
 GtkWidget*		notebook=NULL;
 GtkWidget*		scrollPicBox=NULL;
 GtkWidget*		imageBox=NULL;
-
-//GtkWidget*		badWordLabel=NULL;
-
-//spellcheck
-//GtkWidget*		spellCheckWord=NULL;
-//GtkWidget*		wordListDropbox;
-//char*			badWord=NULL;
-//char*			goodWord=NULL;
-//AspellConfig*	aspellConfig;
-//AspellSpeller*	spellChecker=0;
-//
-//int				numWords=0;

@@ -1,6 +1,6 @@
 //
 //Keith Hedger
-//Tue Jun 12 16:22:48 BST 2007
+//Tue Jun 12 16:22:48 BST 2007-2013
 //
 //clipboardview.cpp
 //
@@ -12,29 +12,28 @@
 #include <glib.h>
 
 #include "globals.h"
+#include "config.h"
 
 gboolean check(gpointer data)
 {
-	GtkTextBuffer	*buffer;
 	GtkTextIter	startIter;
 	GtkTextIter	endIter;
 
 	if (gtk_clipboard_wait_is_text_available(mainclipboard)==true)
 		{
-		gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
-		if (clipText==NULL)
-			return true;
-		gtk_text_buffer_get_bounds((GtkTextBuffer*)bufferBox,&startIter,&endIter);
+			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+			if (clipText==NULL)
+				return true;
+			gtk_text_buffer_get_bounds((GtkTextBuffer*)bufferBox,&startIter,&endIter);
 
-		gchar*	oldText=gtk_text_buffer_get_text((GtkTextBuffer*)bufferBox,&startIter,&endIter,true);
+			gchar*	oldText=gtk_text_buffer_get_text((GtkTextBuffer*)bufferBox,&startIter,&endIter,true);
 		
-		if (g_ascii_strcasecmp(clipText,oldText)!=0)
-			gtk_text_buffer_set_text((GtkTextBuffer*)bufferBox,clipText,-1);
-		gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
-		g_free(clipText);
-		g_free(oldText);
+			if (g_ascii_strcasecmp(clipText,oldText)!=0)
+				gtk_text_buffer_set_text((GtkTextBuffer*)bufferBox,clipText,-1);
+			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
+			g_free(clipText);
+			g_free(oldText);
 		}
-
 
 	if (gtk_clipboard_wait_is_image_available(mainclipboard)==true)
 		{
@@ -56,7 +55,7 @@ void doShutdown(GtkButton *button, gpointer window_ptr)
 
 void doAbout(GtkWidget* widget,gpointer data)
 {
-	const char*	authors[]={"K.D.Hedger <"MYEMAIL">","\nMore by the same author\n","Xfce4-Composite-Editor\nhttp://gtk-apps.org/content/show.php/Xfce4-Composite-Editor?content=149523\n","KKEdit\nhttp://gtk-apps.org/content/show.php?content=158161\n","Manpage Editor\nhttp://gtk-apps.org/content/show.php?content=160219\n","GtkSu\nhttp://gtk-apps.org/content/show.php?content=158974",NULL};
+	const char*	authors[]={"K.D.Hedger <"MYEMAIL">","\nMore by the same author\n","Xfce4-Composite-Editor\nhttp://gtk-apps.org/content/show.php/Xfce4-Composite-Editor?content=149523\n","KKEdit\nhttp://gtk-apps.org/content/show.php?content=158161\n","Manpage Editor\nhttp://gtk-apps.org/content/show.php?content=160219\n","GtkSu\nhttp://gtk-apps.org/content/show.php?content=158974\n","ASpell GUI\nhttp://gtk-apps.org/content/show.php/?content=161353",NULL};
 	const char	copyright[] ="Copyright \xc2\xa9 2013 K.D.Hedger";
 	char*		license=NULL;
 	char*		doc=NULL;
@@ -102,7 +101,6 @@ void buildMainGui(void)
 	GtkWidget*	vbox;
 	GtkWidget*	hbox;
 	GtkWidget*	button;
-	GtkWidget*	image;
 
 	window=gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title((GtkWindow*)window,"Clipboard");
@@ -112,7 +110,7 @@ void buildMainGui(void)
 	notebook=gtk_notebook_new();
 	gtk_notebook_set_show_tabs((GtkNotebook*)notebook,false);
 
-//text to spell check
+//text clip
 	scrollBox=gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollBox),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
 	bufferBox=(GtkWidget*)gtk_text_buffer_new(NULL);
@@ -122,7 +120,7 @@ void buildMainGui(void)
 
 	gtk_notebook_append_page((GtkNotebook*)notebook,scrollBox,NULL);
 
-//image
+//image clip
 	scrollPicBox=gtk_scrolled_window_new(NULL, NULL);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollPicBox),GTK_POLICY_AUTOMATIC,GTK_POLICY_AUTOMATIC);
 	imageBox=gtk_image_new();
@@ -164,26 +162,26 @@ int main(int argc, char **argv)
 
 	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
 		{
-		GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
+			GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
 		
-		if (image!=NULL)
-			{
-				gdk_pixbuf_save(image,tempname, "png",NULL,NULL, NULL, NULL);
-				g_object_unref((gpointer) image);
-				printf(tempname);
-				free(tempname);
-			}
-		else
-			{
-			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
-			
-			if (clipText!=NULL)
+			if (image!=NULL)
 				{
-					printf(clipText);
-					free(clipText);
+					gdk_pixbuf_save(image,tempname, "png",NULL,NULL, NULL, NULL);
+					g_object_unref((gpointer) image);
+					printf(tempname);
+					free(tempname);
 				}
-			}
-		return 0;
+			else
+				{
+					gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+
+				if (clipText!=NULL)
+					{
+						printf(clipText);
+						free(clipText);
+					}
+				}
+			return 0;
 		}
 
 	if (argc>1 && g_ascii_strcasecmp(argv[1],"--query")==0)
@@ -211,8 +209,6 @@ int main(int argc, char **argv)
 			return 1;
 		}
 
-
-
 	buildMainGui();
 	gtk_window_stick(GTK_WINDOW(window));
 	gtk_window_set_keep_above((GtkWindow*)window,true);
@@ -220,88 +216,3 @@ int main(int argc, char **argv)
 	g_timeout_add(1000,check,NULL);
 	gtk_main();
 }
-#if 0
-int mainXX(int argc, char **argv)
-{
-	GtkWindow	*window;
-	gchar		*gladepath;
-
-	gtk_init(&argc,&argv);
-	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
-
-	tempname=tempnam("./","image");
-	strcat(tempname,".png");
-
-	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
-		{
-		GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
-		
-		if (image!=NULL)
-			{
-			gdk_pixbuf_save(image,tempname, "png",NULL,NULL, NULL, NULL);
-			g_object_unref((gpointer) image);
-			g_printf(tempname);
-			free(tempname);
-			}
-		else
-			{
-			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
-			
-			if (clipText!=NULL)
-				{
-				g_printf(clipText);
-				g_free(clipText);
-				}
-			}
-		return 0;
-		}
-
-	if (argc>1 && g_ascii_strcasecmp(argv[1],"--query")==0)
-		{
-			GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
-			if (image!=NULL)
-				{
-				printf("image\n");
-				g_object_unref((gpointer) image);
-				return 0;
-				}
-			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
-			if (clipText!=NULL)
-				{
-				printf("text\n");
-				g_free(clipText);
-				return 0;
-				}
-		}
-
-	if (argc>1)
-		{
-		printf("clipboardviewer %s\n%s: invalid option\n",VERSION,argv[1]);
-		printf("Usage:	clipboardviewer [--nogui] [--query]\n");
-		return 1;
-		}
-
-	if (g_file_test(GLADEFILE,G_FILE_TEST_EXISTS)==TRUE)
-		{
-			gladepath=GLADEFILE;
-			prefixPathToPix=PATHTOPIX;
-			prefixPathToScripts=PATHTOSCRIPTS;
-		}
-	else
-		{
-			asprintf(&gladepath,"%s","/usr/share/ClipboardViewer/ClipboardViewer.glade");
-			asprintf(&prefixPathToPix,"%s","/usr/share/ClipboardViewer/pixmaps");
-			asprintf(&prefixPathToScripts,"%s","/usr/share/ClipboardViewer/scripts");
-		}
-
-	mainui = glade_xml_new(gladepath, NULL, NULL);
-	window = GTK_WINDOW(glade_xml_get_widget(mainui, "clipwindow"));
-	gtk_window_stick(GTK_WINDOW(window));
-	check(NULL);
-	glade_xml_signal_connect_data(mainui,"endprogram",G_CALLBACK(endProgram),GUINT_TO_POINTER(window));
-
-	g_timeout_add(1000,check,NULL);
-	gtk_main();
-	return 0;
-}
-#endif
