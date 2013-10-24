@@ -20,18 +20,60 @@ void setCurrentClip(void)
 	if(currentClip==5)
 		currentClip=0;
 }
-gchar	*gClipText=NULL;
+
+gchar		*gClipText=NULL;
+bool		ignore=false;
+GdkPixbuf	*gPixbuf=NULL;
 
 void clipChanged(GtkClipboard* clipboard,gpointer user_data)
 {
-	gClipText=gtk_clipboard_wait_for_text(clipboard);
-printf("XXXXXXXX - %s\n",gClipText);
-//	if(clip[currentClip].text==clipText
-	setCurrentClip();
-	if(clip[currentClip].text != NULL)
-		free(clip[currentClip].text);
-	clip[currentClip].text=gClipText;
+	if(ignore==false)
+		{
+			if (gtk_clipboard_wait_is_text_available(mainclipboard)==true)
+				{
+					gClipText=gtk_clipboard_wait_for_text(clipboard);
+					setCurrentClip();
+					if(clip[currentClip].text != NULL)
+						free(clip[currentClip].text);
+					if(clip[currentClip].image != NULL)
+						free(clip[currentClip].image);
+					clip[currentClip].image=NULL;
+					clip[currentClip].text=gClipText;
+					gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
+			}
+	
+	
+	
+			if (gtk_clipboard_wait_is_image_available(mainclipboard)==true)
+				{
+					gPixbuf=gtk_clipboard_wait_for_image(mainclipboard);
+					if (gPixbuf==NULL)
+						return;
+					setCurrentClip();
+					if(clip[currentClip].text != NULL)
+						free(clip[currentClip].text);
+					if(clip[currentClip].image != NULL)
+						free(clip[currentClip].image);
+					clip[currentClip].image=gPixbuf;
+					clip[currentClip].text=NULL;
+					gtk_image_set_from_pixbuf((GtkImage*)imageBox,clip[currentClip].image);
+					gtk_notebook_set_current_page((GtkNotebook*)notebook,1);
+					free(gPixbuf);
+				}
+		}
+	else
+		ignore=true;
+}
 
+void setClip(GtkWidget* widget,gpointer data)
+{
+	int clipnum=gtk_combo_box_get_active((GtkComboBox*)widget);
+
+	ignore=true;
+	if(clip[clipnum].text !=NULL)
+		gtk_clipboard_set_text(mainclipboard,clip[clipnum].text,-1);
+	if(clip[clipnum].image !=NULL)
+		gtk_clipboard_set_image(mainclipboard,clip[clipnum].image,-1);
 }
 
 gboolean check(gpointer data)
@@ -115,14 +157,6 @@ void doSticky(GtkWidget* widget,gpointer data)
 			gtk_window_set_keep_above((GtkWindow*)window,false);
 		}
 
-}
-void setClip(GtkWidget* widget,gpointer data)
-{
-	int clipnum=gtk_combo_box_get_active((GtkComboBox*)widget);
-
-	if(clip[clipnum].text !=NULL)
-		printf("clip num %i = %s\n",clipnum,clip[clipnum].text);
-	//printf("clipnum %i\n",clipnum);
 }
 
 void buildMainGui(void)
