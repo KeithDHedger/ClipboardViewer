@@ -14,6 +14,26 @@
 #include "globals.h"
 #include "config.h"
 
+void setCurrentClip(void)
+{
+	currentClip++;
+	if(currentClip==5)
+		currentClip=0;
+}
+gchar	*gClipText=NULL;
+
+void clipChanged(GtkClipboard* clipboard,gpointer user_data)
+{
+	gClipText=gtk_clipboard_wait_for_text(clipboard);
+printf("XXXXXXXX - %s\n",gClipText);
+//	if(clip[currentClip].text==clipText
+	setCurrentClip();
+	if(clip[currentClip].text != NULL)
+		free(clip[currentClip].text);
+	clip[currentClip].text=gClipText;
+
+}
+
 gboolean check(gpointer data)
 {
 	GtkTextIter	startIter;
@@ -21,7 +41,7 @@ gboolean check(gpointer data)
 
 	if (gtk_clipboard_wait_is_text_available(mainclipboard)==true)
 		{
-			gchar	*clipText=gtk_clipboard_wait_for_text(mainclipboard);
+			char*	clipText=gtk_clipboard_wait_for_text(mainclipboard);
 			if (clipText==NULL)
 				return true;
 			gtk_text_buffer_get_bounds((GtkTextBuffer*)bufferBox,&startIter,&endIter);
@@ -32,6 +52,7 @@ gboolean check(gpointer data)
 				gtk_text_buffer_set_text((GtkTextBuffer*)bufferBox,clipText,-1);
 			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
 			g_free(clipText);
+			clipText=NULL;
 			g_free(oldText);
 		}
 
@@ -95,6 +116,14 @@ void doSticky(GtkWidget* widget,gpointer data)
 		}
 
 }
+void setClip(GtkWidget* widget,gpointer data)
+{
+	int clipnum=gtk_combo_box_get_active((GtkComboBox*)widget);
+
+	if(clip[clipnum].text !=NULL)
+		printf("clip num %i = %s\n",clipnum,clip[clipnum].text);
+	//printf("clipnum %i\n",clipnum);
+}
 
 void buildMainGui(void)
 {
@@ -142,6 +171,20 @@ void buildMainGui(void)
 	g_signal_connect(G_OBJECT(button),"clicked",G_CALLBACK(doSticky),NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,true,true,2);
 
+//combo box
+	char	tbuff[64]={0};
+	clipListDrop=gtk_combo_box_text_new();
+	for(int j=0;j<5;j++)
+		{
+			sprintf(tbuff,"Clip No. %i",j);
+			gtk_combo_box_text_append_text((GtkComboBoxText*)clipListDrop,tbuff);
+			clip[j].text=NULL;
+			clip[j].image=NULL;
+		}
+	gtk_combo_box_set_active((GtkComboBox*)clipListDrop,0);
+	g_signal_connect(G_OBJECT(clipListDrop),"changed",G_CALLBACK(setClip),NULL);
+	gtk_box_pack_start(GTK_BOX(hbox),clipListDrop,true,true,2);
+
 	button=gtk_button_new_from_stock(GTK_STOCK_QUIT);
 	g_signal_connect(G_OBJECT(button),"clicked",G_CALLBACK(doShutdown),NULL);
 	gtk_box_pack_start(GTK_BOX(hbox),button,false,false,2);
@@ -156,6 +199,7 @@ int main(int argc, char **argv)
 	gtk_init(&argc,&argv);
 
 	mainclipboard=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
+	g_signal_connect(G_OBJECT(mainclipboard),"owner-change",G_CALLBACK(clipChanged),NULL);
 
 	tempname=tempnam("./","image");
 	strcat(tempname,".png");

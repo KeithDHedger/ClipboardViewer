@@ -13,6 +13,12 @@
 
 #define MYEMAIL "kdhedger68713@gmail.com"
 #define MYWEBSITE "http://keithhedger.hostingsiteforfree.com"
+struct clips
+{
+	GdkPixbuf*		image;
+	char*			text;
+};
+
 
 extern char*			tempname;
 extern GtkClipboard		*mainclipboard;
@@ -25,5 +31,11 @@ extern GtkWidget*		window;
 extern GtkWidget*		notebook;
 extern GtkWidget*		scrollPicBox;
 extern GtkWidget*		imageBox;
+extern GtkWidget*		clipListDrop;
+
+//extern GdkPixbuf*		imageList[5];
+//extern char*			textList[5];
+extern int				currentClip;
+extern clips			clip[5];
 
 #endif
