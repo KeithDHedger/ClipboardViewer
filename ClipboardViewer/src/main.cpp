@@ -14,101 +14,87 @@
 #include "globals.h"
 #include "config.h"
 
+bool		manual=false;
+gchar		*gClipText=NULL;
+GdkPixbuf	*gPixbuf=NULL;
+
+
 void setCurrentClip(void)
 {
+	if(manual==true)
+		return;
 	currentClip++;
 	if(currentClip==5)
 		currentClip=0;
 }
 
-gchar		*gClipText=NULL;
-bool		ignore=false;
-GdkPixbuf	*gPixbuf=NULL;
+void showContents(int clipnum)
+{
+	if(clip[clipnum].text!=NULL)
+		{
+			gtk_text_buffer_set_text((GtkTextBuffer*)bufferBox,clip[clipnum].text,-1);
+			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
+			return;
+		}
+
+	if(clip[clipnum].image!=NULL)
+		{
+			gtk_image_set_from_pixbuf((GtkImage*)imageBox,clip[clipnum].image);
+			gtk_notebook_set_current_page((GtkNotebook*)notebook,1);
+			return;
+		}
+}
 
 void clipChanged(GtkClipboard* clipboard,gpointer user_data)
 {
-	if(ignore==false)
+	if (manual==true)
 		{
-			if (gtk_clipboard_wait_is_text_available(mainclipboard)==true)
-				{
-					gClipText=gtk_clipboard_wait_for_text(clipboard);
-					setCurrentClip();
-					if(clip[currentClip].text != NULL)
-						free(clip[currentClip].text);
-					if(clip[currentClip].image != NULL)
-						free(clip[currentClip].image);
-					clip[currentClip].image=NULL;
-					clip[currentClip].text=gClipText;
-					gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
-			}
-	
-	
-	
-			if (gtk_clipboard_wait_is_image_available(mainclipboard)==true)
-				{
-					gPixbuf=gtk_clipboard_wait_for_image(mainclipboard);
-					if (gPixbuf==NULL)
-						return;
-					setCurrentClip();
-					if(clip[currentClip].text != NULL)
-						free(clip[currentClip].text);
-					if(clip[currentClip].image != NULL)
-						free(clip[currentClip].image);
-					clip[currentClip].image=gPixbuf;
-					clip[currentClip].text=NULL;
-					gtk_image_set_from_pixbuf((GtkImage*)imageBox,clip[currentClip].image);
-					gtk_notebook_set_current_page((GtkNotebook*)notebook,1);
-					free(gPixbuf);
-				}
+			manual=false;
+			return;
 		}
-	else
-		ignore=true;
+
+	if (gtk_clipboard_wait_is_text_available(mainclipboard)==true)
+		{
+			gClipText=gtk_clipboard_wait_for_text(clipboard);
+			setCurrentClip();
+			if(clip[currentClip].text != NULL)
+				free(clip[currentClip].text);
+			if(clip[currentClip].image != NULL)
+				free(clip[currentClip].image);
+			clip[currentClip].image=NULL;
+			clip[currentClip].text=gClipText;
+			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
+		}
+
+	if (gtk_clipboard_wait_is_image_available(mainclipboard)==true)
+		{
+			gPixbuf=gtk_clipboard_wait_for_image(mainclipboard);
+			setCurrentClip();
+			if(clip[currentClip].text != NULL)
+				free(clip[currentClip].text);
+			if(clip[currentClip].image != NULL)
+				free(clip[currentClip].image);
+			clip[currentClip].image=gPixbuf;
+			clip[currentClip].text=NULL;
+			gtk_image_set_from_pixbuf((GtkImage*)imageBox,clip[currentClip].image);
+			gtk_notebook_set_current_page((GtkNotebook*)notebook,1);
+		}
+
+	gtk_combo_box_set_active((GtkComboBox*)clipListDrop,currentClip);
+	showContents(currentClip);
 }
 
 void setClip(GtkWidget* widget,gpointer data)
 {
 	int clipnum=gtk_combo_box_get_active((GtkComboBox*)widget);
 
-	ignore=true;
+	manual=true;
 	if(clip[clipnum].text !=NULL)
 		gtk_clipboard_set_text(mainclipboard,clip[clipnum].text,-1);
 	if(clip[clipnum].image !=NULL)
-		gtk_clipboard_set_image(mainclipboard,clip[clipnum].image,-1);
-}
+		gtk_clipboard_set_image(mainclipboard,clip[clipnum].image);
 
-gboolean check(gpointer data)
-{
-	GtkTextIter	startIter;
-	GtkTextIter	endIter;
-
-	if (gtk_clipboard_wait_is_text_available(mainclipboard)==true)
-		{
-			char*	clipText=gtk_clipboard_wait_for_text(mainclipboard);
-			if (clipText==NULL)
-				return true;
-			gtk_text_buffer_get_bounds((GtkTextBuffer*)bufferBox,&startIter,&endIter);
-
-			gchar*	oldText=gtk_text_buffer_get_text((GtkTextBuffer*)bufferBox,&startIter,&endIter,true);
-		
-			if (g_ascii_strcasecmp(clipText,oldText)!=0)
-				gtk_text_buffer_set_text((GtkTextBuffer*)bufferBox,clipText,-1);
-			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
-			g_free(clipText);
-			clipText=NULL;
-			g_free(oldText);
-		}
-
-	if (gtk_clipboard_wait_is_image_available(mainclipboard)==true)
-		{
-			GdkPixbuf	*pixbuf=gtk_clipboard_wait_for_image(mainclipboard);
-			if (pixbuf==NULL)
-				return true;
-
-			gtk_image_set_from_pixbuf((GtkImage*)imageBox,pixbuf);
-			gtk_notebook_set_current_page((GtkNotebook*)notebook,1);
-		}
-
-	return true;
+	showContents(clipnum);
 }
 
 void doShutdown(GtkButton *button, gpointer window_ptr)
@@ -290,7 +276,7 @@ int main(int argc, char **argv)
 	buildMainGui();
 	gtk_window_stick(GTK_WINDOW(window));
 	gtk_window_set_keep_above((GtkWindow*)window,true);
+	clipChanged(mainclipboard,NULL);
 	gtk_widget_show_all(window);
-	g_timeout_add(1000,check,NULL);
 	gtk_main();
 }
