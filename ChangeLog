@@ -1,0 +1,17 @@
+2.1
+Increased number of remembered clipboard items to 20.
+Added clipboard history to drop down now.
+
+2.0
+Now only needs GTK2 no libglade etc.
+Window can now be made 'sticky' ie shows above all windows on all work spaces.
+Added about box with contact details and GPL3 license.
+
+0.0->1.5
+removed gnome centric stuff, now build and runs in xfce ( - the nautilus script )
+added man page
+added a query command to find out what sort of data is on the clipboard
+added a nautilus script to make a text or image clipping in the current directory ala osx
+cleaned up makefile
+Cleaned up the make file so a Slackware package could be built.
+changed links to new website
