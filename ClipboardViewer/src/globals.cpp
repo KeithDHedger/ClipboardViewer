@@ -10,7 +10,7 @@
 #include "globals.h"
 
 char*			tempname;
-GtkClipboard	*mainclipboard;
+GtkClipboard*	mainclipboard;
 
 GtkWidget*		scrollBox=NULL;
 GtkWidget*		textBox=NULL;
@@ -22,7 +22,5 @@ GtkWidget*		scrollPicBox=NULL;
 GtkWidget*		imageBox=NULL;
 GtkWidget*		clipListDrop=NULL;
 
-//GdkPixbuf*		imageList[5]={NULL};
-//char*			textList[5]={NULL};
 int				currentClip=0;
-clips			clip[5];
+clips			clip[MAXCLIPS];

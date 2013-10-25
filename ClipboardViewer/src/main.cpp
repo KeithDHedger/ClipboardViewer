@@ -24,7 +24,7 @@ void setCurrentClip(void)
 	if(manual==true)
 		return;
 	currentClip++;
-	if(currentClip==5)
+	if(currentClip==MAXCLIPS)
 		currentClip=0;
 }
 
@@ -94,6 +94,12 @@ void setClip(GtkWidget* widget,gpointer data)
 	if(clip[clipnum].image !=NULL)
 		gtk_clipboard_set_image(mainclipboard,clip[clipnum].image);
 
+	if((clip[clipnum].text==NULL) && (clip[clipnum].image==NULL))
+		{
+			manual=false;
+			clipnum=currentClip;
+			gtk_combo_box_set_active((GtkComboBox*)widget,currentClip);
+		}
 	showContents(clipnum);
 }
 
@@ -194,7 +200,7 @@ void buildMainGui(void)
 //combo box
 	char	tbuff[64]={0};
 	clipListDrop=gtk_combo_box_text_new();
-	for(int j=0;j<5;j++)
+	for(int j=0;j<MAXCLIPS;j++)
 		{
 			sprintf(tbuff,"Clip No. %i",j);
 			gtk_combo_box_text_append_text((GtkComboBoxText*)clipListDrop,tbuff);

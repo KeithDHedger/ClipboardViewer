@@ -1,6 +1,6 @@
 #
 #
-AC_INIT([ClipboardViewer],[2.0],[XXX],[ClipboardViewer])
+AC_INIT([ClipboardViewer],[2.1],[XXX],[ClipboardViewer])
 
 AC_CONFIG_HEADER([config.h])
 AC_PROG_CXX

@@ -10,18 +10,18 @@
 #ifndef _GLOBALS_
 #define _GLOBALS_
 
-
+#define MAXCLIPS 20
 #define MYEMAIL "kdhedger68713@gmail.com"
 #define MYWEBSITE "http://keithhedger.hostingsiteforfree.com"
 struct clips
 {
-	GdkPixbuf*		image;
-	char*			text;
+	GdkPixbuf*			image;
+	char*				text;
 };
 
 
 extern char*			tempname;
-extern GtkClipboard		*mainclipboard;
+extern GtkClipboard*	mainclipboard;
 
 extern GtkWidget*		scrollBox;
 extern GtkWidget*		textBox;
@@ -33,9 +33,7 @@ extern GtkWidget*		scrollPicBox;
 extern GtkWidget*		imageBox;
 extern GtkWidget*		clipListDrop;
 
-//extern GdkPixbuf*		imageList[5];
-//extern char*			textList[5];
 extern int				currentClip;
-extern clips			clip[5];
+extern clips			clip[MAXCLIPS];
 
 #endif
