@@ -68,35 +68,18 @@ void clipChanged(GtkClipboard* clipboard,gpointer user_data)
 			if(clip[currentClip].image != NULL)
 				free(clip[currentClip].image);
 			clip[currentClip].text=gClipText;
-			//clip[currentClip].realclip=NULL;
+			clip[currentClip].realclip=NULL;
 			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
 			gtk_combo_box_set_active((GtkComboBox*)clipListDrop,currentClip);
 			showContents(currentClip);
-//			return;
+			return;
 		}
-#if 0
-	if (gtk_clipboard_wait_is_uris_available(mainclipboard)==true)
-		{
-			printf("ZZZZZZZZZ\n");
-			clip[currentClip].uris=gtk_clipboard_wait_for_uris(clipboard);
-			setCurrentClip();
-			//if(clip[currentClip].uris != NULL)
-			//	free(clip[currentClip].text);
-			//if(clip[currentClip].image != NULL)
-			//	free(clip[currentClip].image);
-			//clip[currentClip].text=gClipText;
-			//clip[currentClip].realclip=NULL;
-			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
-			gtk_combo_box_set_active((GtkComboBox*)clipListDrop,currentClip);
-			showContents(currentClip);
-//			return;
-		}
-#endif
 
 	if(clip[currentClip].realclip != NULL)
 		free(clip[currentClip].realclip);
 	clip[currentClip].realclip=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	gtk_clipboard_store(clip[currentClip].realclip);
+//	gtk_clipboard_store(gtk_clipboard_get(GDK_SELECTION_CLIPBOARD));
 }
 #if 0
 void clipChangedX(GtkClipboard* clipboard,gpointer user_data)
@@ -168,6 +151,7 @@ void setClip(GtkWidget* widget,gpointer data)
 
 	showContents(clipnum);
 	if((clip[clipnum].text !=NULL) && (clip[clipnum].realclip!=NULL))
+//	if((clip[clipnum].text !=NULL))
 		{
 			manual=true;
 			gtk_clipboard_set_text(mainclipboard,clip[clipnum].text,-1);
@@ -317,7 +301,7 @@ void buildMainGui(void)
 			gtk_combo_box_text_append_text((GtkComboBoxText*)clipListDrop,tbuff);
 			clip[j].text=NULL;
 			clip[j].image=NULL;
-			clip[j].realclip=NULL;
+//			clip[j].realclip=NULL;
 		}
 	gtk_combo_box_set_active((GtkComboBox*)clipListDrop,0);
 	g_signal_connect(G_OBJECT(clipListDrop),"changed",G_CALLBACK(setClip),NULL);
