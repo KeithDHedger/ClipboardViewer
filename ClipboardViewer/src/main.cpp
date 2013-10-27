@@ -64,9 +64,15 @@ void clipChanged(GtkClipboard* clipboard,gpointer user_data)
 			gClipText=gtk_clipboard_wait_for_text(clipboard);
 			setCurrentClip();
 			if(clip[currentClip].text != NULL)
-				free(clip[currentClip].text);
+				{
+					free(clip[currentClip].text);
+					clip[currentClip].text=NULL;
+				}
 			if(clip[currentClip].image != NULL)
-				free(clip[currentClip].image);
+				{
+					free(clip[currentClip].image);
+					clip[currentClip].image=NULL;
+				}
 			clip[currentClip].text=gClipText;
 			//clip[currentClip].realclip=NULL;
 			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
@@ -74,27 +80,30 @@ void clipChanged(GtkClipboard* clipboard,gpointer user_data)
 			showContents(currentClip);
 //			return;
 		}
-#if 0
-	if (gtk_clipboard_wait_is_uris_available(mainclipboard)==true)
+
+	if (gtk_clipboard_wait_is_image_available(mainclipboard)==true)
 		{
-			printf("ZZZZZZZZZ\n");
-			clip[currentClip].uris=gtk_clipboard_wait_for_uris(clipboard);
+
 			setCurrentClip();
-			//if(clip[currentClip].uris != NULL)
-			//	free(clip[currentClip].text);
-			//if(clip[currentClip].image != NULL)
-			//	free(clip[currentClip].image);
+			if(clip[currentClip].text != NULL)
+				free(clip[currentClip].text);
+			if(clip[currentClip].image != NULL)
+				free(clip[currentClip].image);
 			//clip[currentClip].text=gClipText;
 			//clip[currentClip].realclip=NULL;
+			clip[currentClip].image=gtk_clipboard_wait_for_image(clipboard);
 			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
 			gtk_combo_box_set_active((GtkComboBox*)clipListDrop,currentClip);
 			showContents(currentClip);
 //			return;
 		}
-#endif
 
-	if(clip[currentClip].realclip != NULL)
-		free(clip[currentClip].realclip);
+
+//	if(clip[currentClip].realclip != NULL)
+//		{
+			//free(clip[currentClip].realclip);
+//			clip[currentClip].realclip=NULL;
+//		}
 	clip[currentClip].realclip=gtk_clipboard_get(GDK_SELECTION_CLIPBOARD);
 	gtk_clipboard_store(clip[currentClip].realclip);
 }
@@ -171,6 +180,14 @@ void setClip(GtkWidget* widget,gpointer data)
 		{
 			manual=true;
 			gtk_clipboard_set_text(mainclipboard,clip[clipnum].text,-1);
+			//gtk_clipboard_store((GtkClipboard*)clip[clipnum].uris);
+//			gtk_clipboard_store(clip[clipnum].realclip);
+			showContents(clipnum);
+		}
+	if((clip[clipnum].image !=NULL) && (clip[clipnum].realclip!=NULL))
+		{
+			manual=true;
+			gtk_clipboard_set_image(mainclipboard,clip[clipnum].image);
 			//gtk_clipboard_store((GtkClipboard*)clip[clipnum].uris);
 //			gtk_clipboard_store(clip[clipnum].realclip);
 			showContents(clipnum);
