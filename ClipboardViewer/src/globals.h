@@ -13,6 +13,7 @@
 #define MAXCLIPS 20
 #define MYEMAIL "kdhedger68713@gmail.com"
 #define MYWEBSITE "http://keithhedger.hostingsiteforfree.com"
+
 struct clips
 {
 	GdkPixbuf*			image;

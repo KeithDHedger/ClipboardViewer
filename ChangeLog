@@ -1,6 +1,6 @@
 2.1
 Increased number of remembered clipboard items to 20.
-Added clipboard history to drop down now.
+Added clipboard history for text/images to drop down.
 
 2.0
 Now only needs GTK2 no libglade etc.
