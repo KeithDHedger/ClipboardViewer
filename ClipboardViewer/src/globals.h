@@ -18,7 +18,7 @@ struct clips
 	GdkPixbuf*			image;
 	char*				text;
 	GtkClipboard*		realclip;
-//	gchar**				uris;
+	gchar**				uris;
 };
 
 
