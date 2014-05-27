@@ -23,8 +23,10 @@ install-exec-hook:
 
 	cp ../resources/pixmaps/clipviewer.desktop $(DESTDIR)${prefix}/share/applications/clipviewer.desktop
 	cp ../resources/pixmaps/ClipboardViewer.png $(DESTDIR)${prefix}/share/pixmaps
+	cp ../resources/pixmaps/ClipboardViewer.png $(DESTDIR)${prefix}/share/icons/hicolor/128x128/apps
+	gtk-update-icon-cache --ignore-theme-index --force /usr/share/icons/hicolor
 
 uninstall-hook:
-	rm -f $(DESTDIR)${prefix}/share/applications/clipviewer.desktop $(DESTDIR)${prefix}/share/pixmaps/ClipboardViewer.png
+	rm -f $(DESTDIR)${prefix}/share/applications/clipviewer.desktop $(DESTDIR)${prefix}/share/pixmaps/ClipboardViewer.png $(DESTDIR)${prefix}/share/icons/hicolor/128x128/apps/ClipboardViewer.png
 	rm -fr $(DESTDIR)/$(pkgdatadir)
 

@@ -289,6 +289,8 @@ int main(int argc, char **argv)
 	gtk_window_stick(GTK_WINDOW(window));
 	gtk_window_set_keep_above((GtkWindow*)window,true);
 	clipChanged(mainclipboard,NULL);
+	gtk_window_set_default_icon_name(PACKAGE);
 	gtk_widget_show_all(window);
+	
 	gtk_main();
 }
