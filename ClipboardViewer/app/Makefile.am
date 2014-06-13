@@ -9,7 +9,7 @@ clipboardviewer_CXXFLAGS = -O3
 
 bin_PROGRAMS = clipboardviewer
 
-man1_MANS = ../resources/man/clipboardviewer.1
+man1_MANS = ../resources/man/clipboardviewer.1.gz
 
 docfilesdir = $(pkgdatadir)/docs
 docfiles_DATA = ../resources/docs/*
