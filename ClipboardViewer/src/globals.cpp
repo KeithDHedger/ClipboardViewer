@@ -5,8 +5,6 @@
 //globals.cpp
 //
 
-#include <gtk/gtk.h>
-
 #include "globals.h"
 
 char*			tempname;
