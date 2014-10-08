@@ -17,12 +17,20 @@ bool		manual=false;
 
 char* truncateText(char* txt)
 {
-	if(strlen(txt)<25)
-		return(strdup(txt));
-
 	char* retstr;
+	char* formatstr;
 
-	asprintf(&retstr,"%.10s ... %s",txt,&txt[strlen(txt)-10]);
+	if(strlen(txt)<MAXDROPTXTLEN+5)
+		{
+			retstr=strdup(txt);
+		}
+	else
+		{
+			asprintf(&formatstr,"%%.%is ... %%s",(MAXDROPTXTLEN/2));
+			asprintf(&retstr,formatstr,txt,&txt[strlen(txt)-(MAXDROPTXTLEN/2)]);
+			free(formatstr);
+		}
+
 	for(int j=0;j<strlen(retstr);j++)
 	 if(retstr[j]=='\n')
 		 	retstr[j]='.';
