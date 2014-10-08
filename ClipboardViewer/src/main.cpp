@@ -17,17 +17,18 @@ bool		manual=false;
 
 char* truncateText(char* txt)
 {
-	char* retstr;
-	char* formatstr;
+	char*	retstr;
+	char*	formatstr;
+	int		side=(MAXDROPTXTLEN-5)/2;
 
-	if(strlen(txt)<MAXDROPTXTLEN+5)
+	if(strlen(txt)<=MAXDROPTXTLEN)
 		{
 			retstr=strdup(txt);
 		}
 	else
 		{
-			asprintf(&formatstr,"%%.%is ... %%s",(MAXDROPTXTLEN/2));
-			asprintf(&retstr,formatstr,txt,&txt[strlen(txt)-(MAXDROPTXTLEN/2)]);
+			asprintf(&formatstr,"%%.%is ... %%s",side);
+			asprintf(&retstr,formatstr,txt,&txt[strlen(txt)-side]);
 			free(formatstr);
 		}
 
