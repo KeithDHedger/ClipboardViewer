@@ -15,6 +15,21 @@
 
 bool		manual=false;
 
+char* truncateText(char* txt)
+{
+	if(strlen(txt)<25)
+		return(strdup(txt));
+
+	char* retstr;
+
+	asprintf(&retstr,"%.10s ... %s",txt,&txt[strlen(txt)-10]);
+	for(int j=0;j<strlen(retstr);j++)
+	 if(retstr[j]=='\n')
+		 	retstr[j]='.';
+
+	return(retstr);
+}
+
 void setCurrentClip(void)
 {
 	currentClip++;
@@ -41,6 +56,8 @@ void showContents(int clipnum)
 
 void clipChanged(GtkClipboard* clipboard,gpointer user_data)
 {
+	char*	droptext=NULL;
+
 	if (manual==true)
 		{
 			manual=false;
@@ -60,6 +77,12 @@ void clipChanged(GtkClipboard* clipboard,gpointer user_data)
 					clip[currentClip].image=NULL;
 				}
 			gtk_notebook_set_current_page((GtkNotebook*)notebook,0);
+
+			gtk_combo_box_text_remove((GtkComboBoxText*)clipListDrop,currentClip);
+			droptext=truncateText(clip[currentClip].text);
+			gtk_combo_box_text_insert_text((GtkComboBoxText*)clipListDrop,currentClip,droptext);
+			free(droptext);
+
 			gtk_combo_box_set_active((GtkComboBox*)clipListDrop,currentClip);
 			showContents(currentClip);
 		}
@@ -110,6 +133,7 @@ void setClip(GtkWidget* widget,gpointer data)
 void doShutdown(GtkButton *button, gpointer window_ptr)
 {
 	gtk_main_quit();
+	exit(0);
 }
 
 void doAbout(GtkWidget* widget,gpointer data)
