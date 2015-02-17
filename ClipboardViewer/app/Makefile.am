@@ -19,7 +19,7 @@ pixmaps_DATA = ../resources/pixmaps/*
 
 install-exec-hook:
 
-	mkdir -vp $(DESTDIR)${prefix}/share/applications $(DESTDIR)${prefix}/share/pixmaps||true
+	mkdir -vp $(DESTDIR)${prefix}/share/applications $(DESTDIR)${prefix}/share/pixmaps $(DESTDIR)${prefix}/share//icons/hicolor/128x128/apps || true
 
 	cp ../resources/pixmaps/clipviewer.desktop $(DESTDIR)${prefix}/share/applications/clipviewer.desktop
 	cp ../resources/pixmaps/ClipboardViewer.png $(DESTDIR)${prefix}/share/pixmaps
