@@ -147,8 +147,7 @@ void doShutdown(GtkButton *button, gpointer window_ptr)
 
 void doAbout(GtkWidget* widget,gpointer data)
 {
-	const char*	authors[]={"K.D.Hedger <"MYEMAIL">","\nMore by the same author\n","Xfce4-Composite-Editor\nhttp://gtk-apps.org/content/show.php/Xfce4-Composite-Editor?content=149523\n","KKEdit\nhttp://gtk-apps.org/content/show.php?content=158161\n","Manpage Editor\nhttp://gtk-apps.org/content/show.php?content=160219\n","GtkSu\nhttp://gtk-apps.org/content/show.php?content=158974\n","ASpell GUI\nhttp://gtk-apps.org/content/show.php/?content=161353",NULL};
-	const char	copyright[] ="Copyright \xc2\xa9 2013 K.D.Hedger";
+	const char	copyright[]=COPYRITE;
 	char*		license=NULL;
 	char*		doc=NULL;
 	FILE*		fd=NULL;
@@ -168,7 +167,7 @@ void doAbout(GtkWidget* widget,gpointer data)
 			license[fsize]=0;
 		}
 
-	gtk_show_about_dialog(NULL,"authors",authors,"copyright",copyright,"version",VERSION,"website",MYWEBSITE,"program-name","ClipboardViewer","logo-icon-name","ClipboardViewer","license",license,NULL); 
+	gtk_show_about_dialog(NULL,"authors",authors,"copyright",copyright,"version",VERSION,"website",CLIPVIEW,"website-label","Clipboard Viewer Page","program-name","ClipboardViewer","logo-icon-name","ClipboardViewer","license",license,NULL); 
 }
 
 void doSticky(GtkWidget* widget,gpointer data)

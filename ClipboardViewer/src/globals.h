@@ -6,14 +6,13 @@
 //
 
 #include <gtk/gtk.h>
+#include "internet.h"
 
 #ifndef _GLOBALS_
 #define _GLOBALS_
 
 #define MAXCLIPS 20
 #define MAXDROPTXTLEN 40
-#define MYEMAIL "kdhedger68713@gmail.com"
-#define MYWEBSITE "http://keithhedger.hostingsiteforfree.com"
 
 struct clips
 {
