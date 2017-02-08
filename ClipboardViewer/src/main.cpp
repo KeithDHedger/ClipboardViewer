@@ -266,7 +266,7 @@ int main(int argc, char **argv)
 
 	tempname=tempnam("./","image");
 	strcat(tempname,".png");
-//this is a %100%s percent test
+
 	if (argc>1 && g_ascii_strcasecmp(argv[1],"--nogui")==0)
 		{
 			GdkPixbuf	*image=gtk_clipboard_wait_for_image(mainclipboard);
@@ -275,7 +275,7 @@ int main(int argc, char **argv)
 				{
 					gdk_pixbuf_save(image,tempname, "png",NULL,NULL, NULL, NULL);
 					g_object_unref((gpointer) image);
-					printf(tempname);
+					printf("%s",tempname);
 					free(tempname);
 				}
 			else
