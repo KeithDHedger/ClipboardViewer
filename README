@@ -1,20 +1,12 @@
 Clipboard Viewer
 
-NAME
-       clipboardviewer - manual page for clipboardviewer
-
-SYNOPSIS
-       clipboardviewer [--nogui] [--query]
+clipboardviewer [--nogui] [--query]
 
 DESCRIPTION
-       A GUI to view the main clipboard contents ( text or pic ) or from the command line print the text contents to stdin or create a .png image file in the current directory.
+A GUI to view the main clipboard contents ( text or pic ) or from the command line print the text contents to stdin or create a .png image file in the current directory.
 
-       The window is persistant and will be updated regularly.
-       It can also be made ( the default ) to 'stick' to all workspaces above all over windows.
+The window is persistant and will be updated regularly.
+It can also be made ( the default ) to 'stick' to all workspaces above all over windows.
 
-OPTIONS
-       --nogui
-            Do not create a window just print the contents to stdin or create a picture in the current folder and print the filename.
-
-       --query
-            Print type of data on clipboard ( image or text ).
+--nogui - Do not create a window just print the contents to stdin or create a picture in the current folder and print the filename.
+--query - Print type of data on clipboard ( image or text ).
