@@ -1,6 +1,10 @@
 #!/bin/bash -e
 
-VERSION=1.50.0
+VERSION=$(grep "\bVERSION\b" /media/LinuxData/Development64/Projects/ClipboardViewer/config.h |awk '{print $3}'|sed 's/"//g')
+./configure
+make
+make distclean
+svn commit -m ""
 
 cd /tmp
 svn co file:///media/LinuxData/Development/SVN/ClipboardViewer
