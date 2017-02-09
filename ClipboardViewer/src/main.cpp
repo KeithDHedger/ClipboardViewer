@@ -32,7 +32,7 @@ char* truncateText(char* txt)
 			free(formatstr);
 		}
 
-	for(int j=0;j<strlen(retstr);j++)
+	for(unsigned j=0;j<strlen(retstr);j++)
 	 if(retstr[j]=='\n')
 		 	retstr[j]='.';
 
