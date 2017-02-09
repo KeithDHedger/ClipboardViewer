@@ -9,4 +9,5 @@ The window is persistant and will be updated regularly.
 It can also be made ( the default ) to 'stick' to all workspaces above all over windows.
 
 --nogui - Do not create a window just print the contents to stdin or create a picture in the current folder and print the filename.
+
 --query - Print type of data on clipboard ( image or text ).
