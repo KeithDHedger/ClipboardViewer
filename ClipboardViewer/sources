@@ -1,0 +1,1 @@
+COMMONSRC = ../src/globals.cpp ../src/internet.cpp ../src/main.cpp
