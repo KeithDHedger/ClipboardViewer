@@ -3,6 +3,7 @@ Clipboard Viewer
 clipboardviewer [--nogui] [--query]
 
 DESCRIPTION
+
 A GUI to view the main clipboard contents ( text or pic ) or from the command line print the text contents to stdin or create a .png image file in the current directory.
 
 The window is persistant and will be updated regularly.
