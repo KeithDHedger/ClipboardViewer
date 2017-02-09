@@ -6,6 +6,9 @@ cd /tmp
 svn co file:///media/LinuxData/Development/SVN/ClipboardViewer
 cd /tmp/ClipboardViewer
 find . -iname .svn -exec rm -rf '{}' \; || true
+./configure
+make
+make distclean
 cd ..
 tar --exclude="makezip" --exclude="makepkg" -cvzf ClipboardViewer-${VERSION}.tar.gz ./ClipboardViewer
 rm -rf ./ClipboardViewer
