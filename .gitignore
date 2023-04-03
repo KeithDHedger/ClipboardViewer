@@ -1,2 +1,16 @@
-.svn
+autom4te.cache
+*~
+config.h.in
+configure
+*.o
+.deps
+config.h
+config.log
+config.status
+stamp-h1
 Makefile
+.dirstamp
+ClipboardViewer/app/clipboardviewer
+autom4te.cache
+configure
+config.h.in
